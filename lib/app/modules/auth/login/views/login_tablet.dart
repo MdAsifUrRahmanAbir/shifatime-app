@@ -1,0 +1,1 @@
+// Responsive layout file — implement mobile/tablet/desktop variant here when needed.\n// See the corresponding _view.dart for the main entry point.\n
