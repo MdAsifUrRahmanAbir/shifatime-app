@@ -8,4 +8,6 @@ abstract class Routes {
   static const login = '/login';
   static const profile = '/profile';
   static const darazListing = '/daraz_listing';
+  static const medicine = '/medicine';
+  static const addMedicine = '/add_medicine';
 }
