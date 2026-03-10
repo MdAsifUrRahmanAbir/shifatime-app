@@ -25,6 +25,15 @@ class Medicine extends HiveObject {
   @HiveField(6)
   bool? isActive;
 
+  @HiveField(7)
+  String? durationType; // Nonstop, Specified, Specific Days
+
+  @HiveField(8)
+  String? durationValue; // "5", "Mon,Tue,Wed", etc.
+
+  @HiveField(9)
+  String? durationUnit; // Days, Weeks, Months
+
   Medicine({
     this.id,
     this.name,
@@ -33,5 +42,8 @@ class Medicine extends HiveObject {
     this.reminderTimes,
     this.mealRelation,
     this.isActive = true,
+    this.durationType = 'Nonstop',
+    this.durationValue,
+    this.durationUnit,
   });
 }

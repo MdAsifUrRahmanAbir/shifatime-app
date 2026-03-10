@@ -78,10 +78,12 @@ class _SplashMobileState extends State<_SplashMobile>
                     ),
                   ],
                 ),
-                child: const Icon(
-                  Icons.bolt_rounded,
-                  size: AppSizes.iconExtraLarge,
-                  color: AppColors.primary,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(AppSizes.radiusLarge),
+                  child: Image.asset(
+                    'assets/images/app_logo.png',
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               const SizedBox(height: AppSizes.gapLarge),

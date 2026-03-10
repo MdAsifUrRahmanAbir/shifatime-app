@@ -24,13 +24,16 @@ class MedicineAdapter extends TypeAdapter<Medicine> {
       reminderTimes: (fields[4] as List?)?.cast<String>(),
       mealRelation: fields[5] as String?,
       isActive: fields[6] as bool?,
+      durationType: fields[7] as String?,
+      durationValue: fields[8] as String?,
+      durationUnit: fields[9] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Medicine obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -44,7 +47,13 @@ class MedicineAdapter extends TypeAdapter<Medicine> {
       ..writeByte(5)
       ..write(obj.mealRelation)
       ..writeByte(6)
-      ..write(obj.isActive);
+      ..write(obj.isActive)
+      ..writeByte(7)
+      ..write(obj.durationType)
+      ..writeByte(8)
+      ..write(obj.durationValue)
+      ..writeByte(9)
+      ..write(obj.durationUnit);
   }
 
   @override

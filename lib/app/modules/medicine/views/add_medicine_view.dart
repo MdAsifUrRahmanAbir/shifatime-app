@@ -20,6 +20,24 @@ class _AddMedicineViewState extends State<AddMedicineView> {
   String mealRelation = 'After Meal';
   List<String> reminderTimes = [];
 
+  // Duration State
+  String durationType = 'Nonstop'; // Nonstop, Specified, Specific Days
+  String durationUnit = 'Days'; // Days, Weeks, Months
+  final TextEditingController durationValueController = TextEditingController(
+    text: '7',
+  );
+  List<String> selectedWeekDays = [];
+
+  final List<String> weekDays = [
+    'Sat',
+    'Sun',
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+  ];
+
   final List<Map<String, dynamic>> doseTypes = [
     {'name': 'Tablet', 'icon': Icons.medication},
     {'name': 'Syrup', 'icon': Icons.water_drop},
@@ -169,6 +187,124 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                 _buildMealChip('Empty Stomach', Icons.no_food),
               ],
             ),
+            const SizedBox(height: 24),
+
+            // Duration section
+            const Text(
+              'Duration',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                _buildDurationTypeChip('Nonstop', Icons.all_inclusive),
+                const SizedBox(width: 8),
+                _buildDurationTypeChip('Specified', Icons.timer),
+                const SizedBox(width: 8),
+                _buildDurationTypeChip('Specific Days', Icons.calendar_month),
+              ],
+            ),
+
+            if (durationType == 'Specified') ...[
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: TextField(
+                      controller: durationValueController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: 'Number',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        filled: true,
+                        fillColor: Colors.grey[100],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[100],
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.grey[300]!),
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: durationUnit,
+                          isExpanded: true,
+                          items: ['Days', 'Weeks', 'Months'].map((
+                            String value,
+                          ) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (newValue) {
+                            setState(() => durationUnit = newValue!);
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+
+            if (durationType == 'Specific Days') ...[
+              const SizedBox(height: 16),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: weekDays.map((day) {
+                  final isSelected = selectedWeekDays.contains(day);
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (isSelected) {
+                          selectedWeekDays.remove(day);
+                        } else {
+                          selectedWeekDays.add(day);
+                        }
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: isSelected
+                            ? Get.theme.primaryColor
+                            : Colors.grey[100],
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: isSelected
+                              ? Get.theme.primaryColor
+                              : Colors.transparent,
+                        ),
+                      ),
+                      child: Text(
+                        day,
+                        style: TextStyle(
+                          color: isSelected ? Colors.white : Colors.grey[700],
+                          fontWeight: isSelected
+                              ? FontWeight.bold
+                              : FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ],
+
             const SizedBox(height: 24),
 
             // Reminder Times (Hybrid: Chips + Custom)
@@ -371,6 +507,45 @@ class _AddMedicineViewState extends State<AddMedicineView> {
     );
   }
 
+  Widget _buildDurationTypeChip(String label, IconData icon) {
+    final isSelected = durationType == label;
+    return Expanded(
+      child: GestureDetector(
+        onTap: () => setState(() => durationType = label),
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          decoration: BoxDecoration(
+            color: isSelected
+                ? Get.theme.primaryColor.withOpacity(0.1)
+                : Colors.grey[100],
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: isSelected ? Get.theme.primaryColor : Colors.transparent,
+            ),
+          ),
+          child: Column(
+            children: [
+              Icon(
+                icon,
+                color: isSelected ? Get.theme.primaryColor : Colors.grey[600],
+                size: 20,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                label,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 10,
+                  color: isSelected ? Get.theme.primaryColor : Colors.grey[600],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   void _saveMedicine() {
     if (nameController.text.isEmpty) {
       Get.snackbar(
@@ -395,6 +570,13 @@ class _AddMedicineViewState extends State<AddMedicineView> {
       dosage: dosage,
       mealRelation: mealRelation,
       reminderTimes: reminderTimes,
+      durationType: durationType,
+      durationValue: durationType == 'Specified'
+          ? durationValueController.text
+          : (durationType == 'Specific Days'
+                ? selectedWeekDays.join(',')
+                : null),
+      durationUnit: durationType == 'Specified' ? durationUnit : null,
     );
 
     controller.addMedicine(medicine);

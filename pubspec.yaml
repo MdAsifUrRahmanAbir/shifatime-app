@@ -38,6 +38,7 @@ dependencies:
   fluttertoast: 9.0.0             # Optional: for toast messages
   shimmer: ^3.0.0
   skeletonizer:
+  firebase_core:
 
   # ShifaTime Core
   hive: ^2.2.3
@@ -58,10 +59,11 @@ flutter:
 
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/app_logo.png
+    - assets/images/capsule_medicine.png
+    - assets/images/medicine_reminder_mockup.png
+    - assets/images/medicine_schedule_mockup.png
 
   # fonts:
   #   - family: Schyler

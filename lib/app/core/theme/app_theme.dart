@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_sizes.dart';
 
-
 class AppTheme {
   AppTheme._(); // Private constructor to prevent instantiation
 
@@ -27,11 +26,26 @@ class AppTheme {
       iconTheme: const IconThemeData(color: AppColors.textLight),
     ),
     textTheme: TextTheme(
-      displayLarge: TextStyle(fontSize: AppSizes.fontXLarge, color: AppColors.textPrimary),
-      displayMedium: TextStyle(fontSize: AppSizes.fontLarge, color: AppColors.textPrimary),
-      bodyLarge: TextStyle(fontSize: AppSizes.fontMedium, color: AppColors.textPrimary),
-      bodyMedium: TextStyle(fontSize: AppSizes.fontSmall, color: AppColors.textSecondary),
-      bodySmall: TextStyle(fontSize: AppSizes.fontXS, color: AppColors.textHint),
+      displayLarge: TextStyle(
+        fontSize: AppSizes.fontXLarge,
+        color: AppColors.textPrimary,
+      ),
+      displayMedium: TextStyle(
+        fontSize: AppSizes.fontLarge,
+        color: AppColors.textPrimary,
+      ),
+      bodyLarge: TextStyle(
+        fontSize: AppSizes.fontMedium,
+        color: AppColors.textPrimary,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: AppSizes.fontSmall,
+        color: AppColors.textSecondary,
+      ),
+      bodySmall: TextStyle(
+        fontSize: AppSizes.fontXS,
+        color: AppColors.textHint,
+      ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
@@ -44,7 +58,10 @@ class AppTheme {
         borderRadius: BorderRadius.circular(AppSizes.radius),
         borderSide: BorderSide.none,
       ),
-      hintStyle: TextStyle(fontSize: AppSizes.fontMedium, color: AppColors.textHint),
+      hintStyle: TextStyle(
+        fontSize: AppSizes.fontMedium,
+        color: AppColors.textHint,
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -52,7 +69,10 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSizes.radius),
         ),
-        textStyle: TextStyle(fontSize: AppSizes.fontMedium, fontWeight: FontWeight.bold),
+        textStyle: TextStyle(
+          fontSize: AppSizes.fontMedium,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
@@ -93,10 +113,22 @@ class AppTheme {
       iconTheme: const IconThemeData(color: AppColors.textLight),
     ),
     textTheme: TextTheme(
-      displayLarge: TextStyle(fontSize: AppSizes.fontXLarge, color: AppColors.textLight),
-      displayMedium: TextStyle(fontSize: AppSizes.fontLarge, color: AppColors.textLight),
-      bodyLarge: TextStyle(fontSize: AppSizes.fontMedium, color: AppColors.textLight),
-      bodyMedium: TextStyle(fontSize: AppSizes.fontSmall, color: AppColors.greyLight),
+      displayLarge: TextStyle(
+        fontSize: AppSizes.fontXLarge,
+        color: AppColors.textLight,
+      ),
+      displayMedium: TextStyle(
+        fontSize: AppSizes.fontLarge,
+        color: AppColors.textLight,
+      ),
+      bodyLarge: TextStyle(
+        fontSize: AppSizes.fontMedium,
+        color: AppColors.textLight,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: AppSizes.fontSmall,
+        color: AppColors.greyLight,
+      ),
       bodySmall: TextStyle(fontSize: AppSizes.fontXS, color: AppColors.grey),
     ),
     inputDecorationTheme: InputDecorationTheme(
@@ -110,7 +142,10 @@ class AppTheme {
         borderRadius: BorderRadius.circular(AppSizes.radius),
         borderSide: BorderSide.none,
       ),
-      hintStyle: TextStyle(fontSize: AppSizes.fontMedium, color: AppColors.greyLight),
+      hintStyle: TextStyle(
+        fontSize: AppSizes.fontMedium,
+        color: AppColors.greyLight,
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -118,7 +153,10 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSizes.radius),
         ),
-        textStyle: TextStyle(fontSize: AppSizes.fontMedium, fontWeight: FontWeight.bold),
+        textStyle: TextStyle(
+          fontSize: AppSizes.fontMedium,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(

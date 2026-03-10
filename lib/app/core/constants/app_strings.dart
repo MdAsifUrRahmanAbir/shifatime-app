@@ -3,8 +3,8 @@ class AppStrings {
   AppStrings._();
 
   // App
-  static const String appName = 'Daraz';
-  static const String appTagline = 'Happy Shopping';
+  static const String appName = 'ShifaTime';
+  static const String appTagline = 'Your Health, Our Priority';
 
   // Splash
   static const String loading = 'Loading...';

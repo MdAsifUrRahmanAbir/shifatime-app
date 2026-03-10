@@ -4,9 +4,9 @@ class AppColors {
   // --------------------
   // Brand / Daraz Colors
   // --------------------
-  static const Color primary = Color(0xFFFF6000); // Daraz Orange
-  static const Color primaryDark = Color(0xFFE05200);
-  static const Color primaryLight = Color(0xFFFF8C00);
+  static const Color primary = Color(0xFF2FAC66); // ShifaTime Green
+  static const Color primaryDark = Color(0xFF1E7D4A);
+  static const Color primaryLight = Color(0xFF2FAC66);
 
   static const Color bg = Color(0xFFF5F5F5); // Daraz Background
   static const Color yellow = Color(0xFFFFC200); // Daraz Yellow

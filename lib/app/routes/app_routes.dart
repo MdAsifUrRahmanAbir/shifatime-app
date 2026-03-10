@@ -10,4 +10,5 @@ abstract class Routes {
   static const darazListing = '/daraz_listing';
   static const medicine = '/medicine';
   static const addMedicine = '/add_medicine';
+  static const medicineDetails = '/medicine_details';
 }
