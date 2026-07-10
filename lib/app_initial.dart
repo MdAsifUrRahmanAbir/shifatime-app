@@ -33,12 +33,6 @@ class AppInitial {
       DeviceOrientation.portraitDown,
     ]);
 
-    // ─── Firebase (uncomment when firebase is configured) ─────────────────────
-    // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-    // ─── Permanent services ───────────────────────────────────────────────────
-    // Get.put(FirebaseService(), permanent: true);
-
     // ─── Apply saved theme ────────────────────────────────────────────────────
     AppTheme.themeMode = LocalStorage.isDarkMode()
         ? ThemeMode.dark

@@ -2,14 +2,15 @@ import 'package:get/get.dart';
 
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
-import '../modules/auth/login/bindings/login_binding.dart';
-import '../modules/auth/login/views/login_view.dart';
-import '../modules/profile/bindings/profile_binding.dart';
-import '../modules/profile/views/profile_view.dart';
 import '../modules/medicine/bindings/medicine_binding.dart';
 import '../modules/medicine/views/medicine_view.dart';
 import '../modules/medicine/views/add_medicine_view.dart';
 import '../modules/medicine/views/medicine_details_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
+import '../modules/profile/views/profile_setup_view.dart';
+import '../modules/water_intake/bindings/water_intake_binding.dart';
+import '../modules/water_intake/views/water_intake_view.dart';
 
 part 'app_routes.dart';
 
@@ -27,15 +28,21 @@ class AppPages {
       transition: Transition.fadeIn,
     ),
     GetPage(
-      name: Routes.login,
-      page: () => const LoginView(),
-      binding: LoginBinding(),
-      transition: Transition.rightToLeft,
-    ),
-    GetPage(
       name: Routes.profile,
       page: () => const ProfileView(),
       binding: ProfileBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.profileSetup,
+      page: () => const ProfileSetupView(),
+      binding: ProfileBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.waterIntake,
+      page: () => const WaterIntakeView(),
+      binding: WaterIntakeBinding(),
       transition: Transition.rightToLeft,
     ),
     GetPage(

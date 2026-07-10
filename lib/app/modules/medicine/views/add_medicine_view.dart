@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/medicine_controller.dart';
 import '../../../data/models/medicine_model.dart';
-import 'package:flutter/cupertino.dart';
 
 class AddMedicineView extends StatefulWidget {
   const AddMedicineView({super.key});
@@ -98,8 +97,8 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                           boxShadow: isSelected
                               ? [
                                   BoxShadow(
-                                    color: Get.theme.primaryColor.withOpacity(
-                                      0.3,
+                                    color: Get.theme.primaryColor.withValues(
+                                      alpha: 0.3,
                                     ),
                                     blurRadius: 8,
                                     offset: const Offset(0, 4),
@@ -439,7 +438,7 @@ class _AddMedicineViewState extends State<AddMedicineView> {
             boxShadow: isSelected
                 ? [
                     BoxShadow(
-                      color: Get.theme.primaryColor.withOpacity(0.3),
+                      color: Get.theme.primaryColor.withValues(alpha: 0.3),
                       blurRadius: 8,
                       offset: const Offset(0, 4),
                     ),
@@ -478,7 +477,7 @@ class _AddMedicineViewState extends State<AddMedicineView> {
           padding: const EdgeInsets.symmetric(vertical: 12),
           decoration: BoxDecoration(
             color: isSelected
-                ? Get.theme.primaryColor.withOpacity(0.1)
+                ? Get.theme.primaryColor.withValues(alpha: 0.1)
                 : Colors.grey[100],
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
@@ -516,7 +515,7 @@ class _AddMedicineViewState extends State<AddMedicineView> {
           padding: const EdgeInsets.symmetric(vertical: 12),
           decoration: BoxDecoration(
             color: isSelected
-                ? Get.theme.primaryColor.withOpacity(0.1)
+                ? Get.theme.primaryColor.withValues(alpha: 0.1)
                 : Colors.grey[100],
             borderRadius: BorderRadius.circular(12),
             border: Border.all(

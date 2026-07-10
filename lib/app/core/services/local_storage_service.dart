@@ -14,6 +14,13 @@ const String _languageKey = 'languageKey';
 const String _langSmallKey = 'langSmallKey';
 const String _langCapKey = 'langCapKey';
 
+// Profile & Water Intake Keys
+const String _ageKey = 'userAge';
+const String _heightKey = 'userHeight';
+const String _weightKey = 'userWeight';
+const String _waterTargetKey = 'userWaterTarget';
+const String _waterIntakeHistoryPrefix = 'waterIntakeHistory_';
+
 /// Static local storage utility backed by GetStorage.
 ///
 /// Initialise once in `main()` before `runApp`:
@@ -93,6 +100,47 @@ class LocalStorage {
     _box.read(_languageKey) ?? 'English',
   ];
 
+  // ── Profile ───────────────────────────────────────────────────────────────
+  static bool hasProfile() => getName().isNotEmpty && getWeight() > 0 && getHeight() > 0;
+
+  static Future<void> saveProfile({
+    required String name,
+    required int age,
+    required double height,
+    required double weight,
+    required double waterTarget,
+  }) async {
+    await _box.write(_nameKey, name);
+    await _box.write(_ageKey, age);
+    await _box.write(_heightKey, height);
+    await _box.write(_weightKey, weight);
+    await _box.write(_waterTargetKey, waterTarget);
+  }
+
+  static int getAge() => _box.read(_ageKey) ?? 0;
+  static double getHeight() => _box.read(_heightKey) ?? 0.0;
+  static double getWeight() => _box.read(_weightKey) ?? 0.0;
+  static double getWaterTarget() => _box.read(_waterTargetKey) ?? 2000.0;
+
+  // ── Water Intake ──────────────────────────────────────────────────────────
+  static List<Map<String, dynamic>> getWaterLogs(String date) {
+    final list = _box.read<List<dynamic>>('$_waterIntakeHistoryPrefix$date') ?? [];
+    return list.map((item) => Map<String, dynamic>.from(item)).toList();
+  }
+
+  static Future<void> saveWaterLogs(String date, List<Map<String, dynamic>> logs) async {
+    await _box.write('$_waterIntakeHistoryPrefix$date', logs);
+  }
+
+  static double getWaterIntake(String date) {
+    final logs = getWaterLogs(date);
+    double total = 0.0;
+    for (final log in logs) {
+      total += (log['amount'] as num?)?.toDouble() ?? 0.0;
+    }
+    return total;
+  }
+
   // ── Sign Out ──────────────────────────────────────────────────────────────
   static Future<void> signOut() async {
     await _box.remove(_tokenKey);
@@ -100,6 +148,10 @@ class LocalStorage {
     await _box.remove(_emailKey);
     await _box.remove(_imageKey);
     await _box.remove(_isLoggedInKey);
+    await _box.remove(_ageKey);
+    await _box.remove(_heightKey);
+    await _box.remove(_weightKey);
+    await _box.remove(_waterTargetKey);
     // Keep onboard status — user has already seen it
   }
 }

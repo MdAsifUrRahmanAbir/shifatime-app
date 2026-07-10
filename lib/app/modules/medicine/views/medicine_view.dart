@@ -5,14 +5,18 @@ import '../../../core/constants/app_colors.dart';
 import '../controllers/medicine_controller.dart';
 import '../../../routes/app_pages.dart';
 import '../../../data/models/medicine_model.dart';
+import '../../water_intake/controllers/water_intake_controller.dart';
 
 class MedicineView extends GetView<MedicineController> {
   const MedicineView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final WaterIntakeController waterCtrl = Get.put(WaterIntakeController());
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FB),
+      backgroundColor: isDark ? AppColors.darkScaffoldBackground : const Color(0xFFF8F9FB),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light.copyWith(
           statusBarColor: AppColors.primary,
@@ -25,6 +29,9 @@ class MedicineView extends GetView<MedicineController> {
 
             // Weekly Calendar Bar
             _buildCalendarBar(),
+
+            // Water Intake Card
+            _buildWaterIntakeCard(context, waterCtrl),
 
             // Medicine Grid
             Expanded(
@@ -82,20 +89,14 @@ class MedicineView extends GetView<MedicineController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const CircleAvatar(
-                radius: 24,
-                backgroundImage: NetworkImage(
-                  'https://i.pravatar.cc/150?u=shifatime_user',
-                ),
+          GestureDetector(
+            onTap: () => Get.toNamed(Routes.profile),
+            child: const CircleAvatar(
+              radius: 24,
+              backgroundImage: NetworkImage(
+                'https://i.pravatar.cc/150?u=shifatime_user',
               ),
-              IconButton(
-                icon: const Icon(Icons.menu, color: Colors.white, size: 32),
-                onPressed: () => Get.toNamed(Routes.profile),
-              ),
-            ],
+            ),
           ),
           const SizedBox(height: 24),
           const Text(
@@ -278,5 +279,80 @@ class MedicineView extends GetView<MedicineController> {
       default:
         return Icons.medical_services;
     }
+  }
+
+  Widget _buildWaterIntakeCard(BuildContext context, WaterIntakeController waterCtrl) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Obx(() {
+      final consumed = waterCtrl.consumedMl.value.toInt();
+      final target = waterCtrl.targetMl.value.toInt();
+      final progress = target > 0 ? (consumed / target).clamp(0.0, 1.0) : 0.0;
+      final percent = (progress * 100).toInt().clamp(0, 100);
+
+      return GestureDetector(
+        onTap: () => Get.toNamed(Routes.waterIntake),
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: isDark ? AppColors.darkCardBackground : Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.03),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  SizedBox(
+                    width: 48,
+                    height: 48,
+                    child: CircularProgressIndicator(
+                      value: progress,
+                      strokeWidth: 3.5,
+                      backgroundColor: Colors.blue.withValues(alpha: 0.1),
+                      valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
+                    ),
+                  ),
+                  const Icon(Icons.opacity, color: Colors.blue, size: 22),
+                ],
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Water Reminder',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: isDark ? Colors.white : AppColors.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Goal: $consumed / $target ml ($percent% logged)',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.chevron_right, color: Colors.grey),
+            ],
+          ),
+        ),
+      );
+    });
   }
 }

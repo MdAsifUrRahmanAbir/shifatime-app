@@ -21,7 +21,6 @@ export '../../widgets/chip_widget.dart';
 export '../../widgets/toggle_switch_widget.dart';
 export '../../widgets/rich_text_widget.dart';
 export '../../widgets/progress_bar_widget.dart';
-export '../../widgets/pin_code_field_widget.dart';
 
 // ── Utils ─────────────────────────────────────────────────────────────────────
 export 'responsive_layout.dart';

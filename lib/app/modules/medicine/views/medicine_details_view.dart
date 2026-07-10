@@ -179,8 +179,9 @@ class MedicineDetailsView extends GetView<MedicineController> {
 
   String _formatProgram(Medicine med) {
     if (med.durationType == 'Nonstop') return 'Nonstop / Regular';
-    if (med.durationType == 'Specific Days')
+    if (med.durationType == 'Specific Days') {
       return 'Specified Days: ${med.durationValue}';
+    }
     return '${med.durationValue} ${med.durationUnit} total';
   }
 }

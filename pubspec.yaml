@@ -19,9 +19,6 @@ dependencies:
   # Local Storage (get_storage — faster than SharedPreferences, matches Remitium pattern)
   get_storage: ^2.1.1
 
-  # HTTP Client (matches Remitium's ApiMethod which uses http package)
-  http: ^1.2.0
-
   # Logging (typed per-class logger, matches Remitium)
   logger: ^2.4.0
 
@@ -38,7 +35,6 @@ dependencies:
   fluttertoast: 9.0.0             # Optional: for toast messages
   shimmer: ^3.0.0
   skeletonizer:
-  firebase_core:
 
   # ShifaTime Core
   hive: ^2.2.3

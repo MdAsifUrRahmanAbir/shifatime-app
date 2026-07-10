@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:get/get.dart';
+import '../../../core/services/local_storage_service.dart';
 import '../../../routes/app_pages.dart';
 
 class SplashController extends GetxController {
@@ -16,6 +17,10 @@ class SplashController extends GetxController {
   }
 
   void _goToScreen() {
-    Get.offAllNamed(Routes.medicine);
+    if (LocalStorage.hasProfile()) {
+      Get.offAllNamed(Routes.medicine);
+    } else {
+      Get.offAllNamed(Routes.profileSetup);
+    }
   }
 }

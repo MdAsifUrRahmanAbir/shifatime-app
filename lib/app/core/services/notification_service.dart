@@ -76,6 +76,64 @@ class NotificationService {
     );
   }
 
+  static const String waterChannelId = 'water_reminders';
+  static const String waterChannelName = 'Water Reminders';
+
+  static Future<void> scheduleWaterReminder({
+    required int id,
+    required String title,
+    required String body,
+    required int hour,
+    required int minute,
+  }) async {
+    final now = DateTime.now();
+    var scheduledDate = DateTime(now.year, now.month, now.day, hour, minute);
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+
+    await _notificationsPlugin.zonedSchedule(
+      id: id,
+      title: title,
+      body: body,
+      scheduledDate: tz.TZDateTime.from(scheduledDate, tz.local),
+      notificationDetails: const NotificationDetails(
+        android: AndroidNotificationDetails(
+          waterChannelId,
+          waterChannelName,
+          channelDescription: 'Notifications to remind you to drink water',
+          importance: Importance.high,
+          priority: Priority.high,
+        ),
+        iOS: DarwinNotificationDetails(),
+      ),
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      matchDateTimeComponents: DateTimeComponents.time,
+    );
+  }
+
+  static Future<void> scheduleDailyWaterReminders() async {
+    await cancelWaterReminders();
+
+    final intervals = [9, 11, 13, 15, 17, 19, 21];
+    for (final hour in intervals) {
+      await scheduleWaterReminder(
+        id: 9000 + hour,
+        title: 'Time to drink water! 💧',
+        body: 'Keep yourself hydrated. Have a glass of water now.',
+        hour: hour,
+        minute: 0,
+      );
+    }
+  }
+
+  static Future<void> cancelWaterReminders() async {
+    final intervals = [9, 11, 13, 15, 17, 19, 21];
+    for (final hour in intervals) {
+      await _notificationsPlugin.cancel(id: 9000 + hour);
+    }
+  }
+
   static Future<void> cancelAllNotifications() async {
     await _notificationsPlugin.cancelAll();
   }
