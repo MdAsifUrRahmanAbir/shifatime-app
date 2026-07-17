@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../data/models/medicine_model.dart';
 import '../controllers/medicine_controller.dart';
@@ -10,106 +11,261 @@ class MedicineDetailsView extends GetView<MedicineController> {
   @override
   Widget build(BuildContext context) {
     final Medicine medicine = Get.arguments;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: isDark ? AppColors.darkScaffoldBackground : AppColors.scaffoldBackground,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        title: Text(
+          'Medicine Details',
+          style: GoogleFonts.outfit(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.grey),
+          icon: Icon(Icons.arrow_back_ios_new_rounded, color: isDark ? Colors.white : AppColors.textPrimary),
           onPressed: () => Get.back(),
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Pill Image and Basic Info Row
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Pill Illustration (Mocking with Icon for now, can use image later)
-                Container(
-                  width: 140,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[50],
-                    borderRadius: BorderRadius.circular(30),
+            // Pill Image and Basic Info Card
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: isDark ? AppColors.darkCardBackground : Colors.white,
+                borderRadius: BorderRadius.circular(28),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.02),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
                   ),
-                  child: Center(
-                    child: Image.asset(
-                      'assets/images/capsule_medicine.png',
-                      height: 140,
-                      fit: BoxFit.contain,
+                ],
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Pill Illustration
+                  Container(
+                    width: 110,
+                    height: 150,
+                    decoration: BoxDecoration(
+                      color: isDark ? Colors.white.withValues(alpha: 0.05) : AppColors.greyLight,
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: Center(
+                      child: Image.asset(
+                        'assets/images/capsule_medicine.png',
+                        height: 90,
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 24),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildInfoLabel('Pill Name'),
-                      Text(
-                        medicine.name ?? 'Unknown',
-                        style: const TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primary,
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildInfoLabel('PILL NAME'),
+                        const SizedBox(height: 4),
+                        Text(
+                          medicine.name ?? 'Unknown',
+                          style: GoogleFonts.outfit(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primary,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 24),
-                      _buildInfoLabel('Pill Dosage'),
-                      Text(
-                        '${medicine.dosage} mg',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primary,
+                        const SizedBox(height: 16),
+                        _buildInfoLabel('DOSAGE'),
+                        const SizedBox(height: 4),
+                        Text(
+                          medicine.customDosage ?? '${medicine.dosage} ${medicine.type}(s)',
+                          style: GoogleFonts.outfit(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: isDark ? Colors.white : AppColors.textPrimary,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 24),
-                      _buildInfoLabel('Next dose'),
-                      Text(
-                        _calculateNextDose(medicine.reminderTimes),
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primary,
+                        const SizedBox(height: 16),
+                        _buildInfoLabel('FIRST DOSE'),
+                        const SizedBox(height: 4),
+                        Text(
+                          _calculateNextDose(medicine.reminderTimes),
+                          style: GoogleFonts.outfit(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: isDark ? Colors.white : AppColors.textPrimary,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
+            const SizedBox(height: 24),
+
+            // Detailed Parameters Block
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(22),
+              decoration: BoxDecoration(
+                color: isDark ? AppColors.darkCardBackground : Colors.white,
+                borderRadius: BorderRadius.circular(28),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.02),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  _buildDetailRow(
+                    context,
+                    Icons.schedule_rounded,
+                    'Dose Schedule',
+                    '${medicine.reminderTimes?.length ?? 0} times • ${medicine.reminderTimes?.join(', ') ?? 'N/A'}',
+                  ),
+                  const Divider(height: 32),
+                  _buildDetailRow(
+                    context,
+                    Icons.calendar_today_rounded,
+                    'Program Duration',
+                    _formatProgram(medicine),
+                  ),
+                  const Divider(height: 32),
+                  _buildDetailRow(
+                    context,
+                    Icons.restaurant_menu_rounded,
+                    'Meal Relation',
+                    medicine.mealRelation ?? 'Not specified',
+                  ),
+                  if (medicine.applicationArea != null && medicine.applicationArea!.isNotEmpty) ...[
+                    const Divider(height: 32),
+                    _buildDetailRow(
+                      context,
+                      Icons.location_on_rounded,
+                      'Application Area',
+                      'Apply on ${medicine.applicationArea}',
+                    ),
+                  ],
+                  if (medicine.usageInstruction != null && medicine.usageInstruction!.isNotEmpty) ...[
+                    const Divider(height: 32),
+                    _buildDetailRow(
+                      context,
+                      Icons.info_rounded,
+                      'Instructions / Notes',
+                      medicine.usageInstruction!,
+                    ),
+                  ],
+                ],
+              ),
+            ),
+
+            // Today's Dose Tracker checklist
+            Obx(() {
+              final todayDoses = controller.todayDoses.where((d) => d.medicineId == medicine.id).toList();
+              if (todayDoses.isEmpty) return const SizedBox.shrink();
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 24),
+                  Text(
+                    "Today's Intake Status",
+                    style: GoogleFonts.outfit(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: isDark ? Colors.white : AppColors.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(22),
+                    decoration: BoxDecoration(
+                      color: isDark ? AppColors.darkCardBackground : Colors.white,
+                      borderRadius: BorderRadius.circular(28),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.02),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: todayDoses.length,
+                      separatorBuilder: (context, index) => const Divider(height: 24),
+                      itemBuilder: (context, index) {
+                        final dose = todayDoses[index];
+                        final isTaken = dose.status == 'taken';
+                        final isSkipped = dose.status == 'skipped';
+
+                        return Row(
+                          children: [
+                            Icon(
+                              isTaken
+                                  ? Icons.check_circle_rounded
+                                  : (isSkipped ? Icons.cancel_rounded : Icons.radio_button_off_rounded),
+                              color: isTaken
+                                  ? Colors.green
+                                  : (isSkipped ? Colors.redAccent : Colors.grey),
+                              size: 22,
+                            ),
+                            const SizedBox(width: 14),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    dose.timeStr ?? '',
+                                    style: GoogleFonts.outfit(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: isDark ? Colors.white : AppColors.textPrimary,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    isTaken
+                                        ? 'Taken at ${dose.takenTime != null ? TimeOfDay.fromDateTime(dose.takenTime!).format(context) : ""}'
+                                        : (isSkipped ? 'Skipped' : 'Pending'),
+                                    style: GoogleFonts.outfit(
+                                      fontSize: 11,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              );
+            }),
+
             const SizedBox(height: 48),
 
-            // Detailed Sections
-            _buildDetailSection(
-              'Dose',
-              '${medicine.reminderTimes?.length ?? 0} times | ${medicine.reminderTimes?.join(', ') ?? 'N/A'}',
-            ),
-            const SizedBox(height: 32),
-            _buildDetailSection('Program', _formatProgram(medicine)),
-            const SizedBox(height: 32),
-            _buildDetailSection(
-              'Meal Relation',
-              medicine.mealRelation ?? 'Not specified',
-            ),
-
-            const SizedBox(height: 64),
-
-            // Change Schedule Button
+            // Back / Close Button
             SizedBox(
               width: double.infinity,
               height: 56,
               child: ElevatedButton(
                 onPressed: () {
-                  // Navigate to edit/add with this medicine
-                  Get.back(); // For now
+                  Get.back();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
@@ -118,9 +274,9 @@ class MedicineDetailsView extends GetView<MedicineController> {
                   ),
                   elevation: 0,
                 ),
-                child: const Text(
-                  'Change Schedule',
-                  style: TextStyle(
+                child: Text(
+                  'Close Details',
+                  style: GoogleFonts.outfit(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
@@ -138,33 +294,51 @@ class MedicineDetailsView extends GetView<MedicineController> {
   Widget _buildInfoLabel(String label) {
     return Text(
       label,
-      style: TextStyle(
-        fontSize: 14,
-        color: Colors.grey[400],
-        fontWeight: FontWeight.w500,
+      style: GoogleFonts.outfit(
+        fontSize: 11,
+        color: Colors.grey[500],
+        fontWeight: FontWeight.w700,
+        letterSpacing: 0.8,
       ),
     );
   }
 
-  Widget _buildDetailSection(String title, String value) {
-    return Column(
+  Widget _buildDetailRow(BuildContext context, IconData icon, String title, String value) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
+        Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: AppColors.primary.withValues(alpha: 0.1),
+            shape: BoxShape.circle,
           ),
+          child: Icon(icon, color: AppColors.primary, size: 20),
         ),
-        const SizedBox(height: 8),
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.grey[500],
-            fontWeight: FontWeight.w400,
+        const SizedBox(width: 16),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.outfit(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: isDark ? Colors.white : AppColors.textPrimary,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                value,
+                style: GoogleFonts.outfit(
+                  fontSize: 13,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
           ),
         ),
       ],
@@ -173,7 +347,6 @@ class MedicineDetailsView extends GetView<MedicineController> {
 
   String _calculateNextDose(List<String>? times) {
     if (times == null || times.isEmpty) return 'N/A';
-    // For simplicity, just return the first time for now or mock "3 pm"
     return times.first;
   }
 

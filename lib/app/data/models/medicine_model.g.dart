@@ -27,13 +27,22 @@ class MedicineAdapter extends TypeAdapter<Medicine> {
       durationType: fields[7] as String?,
       durationValue: fields[8] as String?,
       durationUnit: fields[9] as String?,
+      totalStock: fields[10] as int?,
+      stockThreshold: fields[11] as int?,
+      isStockAlertEnabled: fields[12] as bool?,
+      customDosage: fields[13] as String?,
+      applicationArea: fields[14] as String?,
+      usageInstruction: fields[15] as String?,
+      startDate: fields[16] as DateTime?,
+      snoozeCount: fields[17] as int?,
+      snoozeUntil: fields[18] as DateTime?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Medicine obj) {
     writer
-      ..writeByte(10)
+      ..writeByte(19)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -53,7 +62,25 @@ class MedicineAdapter extends TypeAdapter<Medicine> {
       ..writeByte(8)
       ..write(obj.durationValue)
       ..writeByte(9)
-      ..write(obj.durationUnit);
+      ..write(obj.durationUnit)
+      ..writeByte(10)
+      ..write(obj.totalStock)
+      ..writeByte(11)
+      ..write(obj.stockThreshold)
+      ..writeByte(12)
+      ..write(obj.isStockAlertEnabled)
+      ..writeByte(13)
+      ..write(obj.customDosage)
+      ..writeByte(14)
+      ..write(obj.applicationArea)
+      ..writeByte(15)
+      ..write(obj.usageInstruction)
+      ..writeByte(16)
+      ..write(obj.startDate)
+      ..writeByte(17)
+      ..write(obj.snoozeCount)
+      ..writeByte(18)
+      ..write(obj.snoozeUntil);
   }
 
   @override

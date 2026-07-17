@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../constants/app_colors.dart';
 import '../constants/app_sizes.dart';
@@ -15,23 +16,25 @@ class AppTheme {
     scaffoldBackgroundColor: AppColors.scaffoldBackground,
     cardColor: AppColors.cardBackground,
     appBarTheme: AppBarTheme(
-      backgroundColor: AppColors.primary,
+      backgroundColor: Colors.transparent,
       elevation: 0,
       centerTitle: true,
-      titleTextStyle: TextStyle(
+      titleTextStyle: GoogleFonts.outfit(
         fontSize: AppSizes.fontLarge,
         fontWeight: FontWeight.bold,
-        color: AppColors.textLight,
+        color: AppColors.textPrimary,
       ),
-      iconTheme: const IconThemeData(color: AppColors.textLight),
+      iconTheme: const IconThemeData(color: AppColors.textPrimary),
     ),
-    textTheme: TextTheme(
+    textTheme: GoogleFonts.outfitTextTheme(const TextTheme(
       displayLarge: TextStyle(
         fontSize: AppSizes.fontXLarge,
+        fontWeight: FontWeight.bold,
         color: AppColors.textPrimary,
       ),
       displayMedium: TextStyle(
         fontSize: AppSizes.fontLarge,
+        fontWeight: FontWeight.bold,
         color: AppColors.textPrimary,
       ),
       bodyLarge: TextStyle(
@@ -46,7 +49,7 @@ class AppTheme {
         fontSize: AppSizes.fontXS,
         color: AppColors.textHint,
       ),
-    ),
+    )),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: AppColors.greyLight,
@@ -55,10 +58,10 @@ class AppTheme {
         vertical: AppSizes.paddingSmall,
       ),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(AppSizes.radius),
+        borderRadius: BorderRadius.circular(16),
         borderSide: BorderSide.none,
       ),
-      hintStyle: TextStyle(
+      hintStyle: GoogleFonts.outfit(
         fontSize: AppSizes.fontMedium,
         color: AppColors.textHint,
       ),
@@ -67,9 +70,9 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSizes.radius),
+          borderRadius: BorderRadius.circular(16),
         ),
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.outfit(
           fontSize: AppSizes.fontMedium,
           fontWeight: FontWeight.bold,
         ),
@@ -78,7 +81,7 @@ class AppTheme {
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSizes.radius),
+          borderRadius: BorderRadius.circular(16),
         ),
         side: const BorderSide(color: AppColors.primary),
       ),
@@ -88,8 +91,8 @@ class AppTheme {
       selectedItemColor: AppColors.primary,
       unselectedItemColor: AppColors.grey,
       showUnselectedLabels: true,
-      selectedLabelStyle: TextStyle(fontSize: AppSizes.fontSmall),
-      unselectedLabelStyle: TextStyle(fontSize: AppSizes.fontSmall),
+      selectedLabelStyle: GoogleFonts.outfit(fontSize: AppSizes.fontSmall),
+      unselectedLabelStyle: GoogleFonts.outfit(fontSize: AppSizes.fontSmall),
     ),
   );
 
@@ -102,23 +105,25 @@ class AppTheme {
     scaffoldBackgroundColor: AppColors.darkScaffoldBackground,
     cardColor: AppColors.darkCardBackground,
     appBarTheme: AppBarTheme(
-      backgroundColor: AppColors.primaryDark,
+      backgroundColor: Colors.transparent,
       elevation: 0,
       centerTitle: true,
-      titleTextStyle: TextStyle(
+      titleTextStyle: GoogleFonts.outfit(
         fontSize: AppSizes.fontLarge,
         fontWeight: FontWeight.bold,
         color: AppColors.textLight,
       ),
       iconTheme: const IconThemeData(color: AppColors.textLight),
     ),
-    textTheme: TextTheme(
+    textTheme: GoogleFonts.outfitTextTheme(const TextTheme(
       displayLarge: TextStyle(
         fontSize: AppSizes.fontXLarge,
+        fontWeight: FontWeight.bold,
         color: AppColors.textLight,
       ),
       displayMedium: TextStyle(
         fontSize: AppSizes.fontLarge,
+        fontWeight: FontWeight.bold,
         color: AppColors.textLight,
       ),
       bodyLarge: TextStyle(
@@ -130,7 +135,7 @@ class AppTheme {
         color: AppColors.greyLight,
       ),
       bodySmall: TextStyle(fontSize: AppSizes.fontXS, color: AppColors.grey),
-    ),
+    )),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: AppColors.greyDark,
@@ -139,10 +144,10 @@ class AppTheme {
         vertical: AppSizes.paddingSmall,
       ),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(AppSizes.radius),
+        borderRadius: BorderRadius.circular(16),
         borderSide: BorderSide.none,
       ),
-      hintStyle: TextStyle(
+      hintStyle: GoogleFonts.outfit(
         fontSize: AppSizes.fontMedium,
         color: AppColors.greyLight,
       ),
@@ -151,9 +156,9 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primaryDark,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSizes.radius),
+          borderRadius: BorderRadius.circular(16),
         ),
-        textStyle: TextStyle(
+        textStyle: GoogleFonts.outfit(
           fontSize: AppSizes.fontMedium,
           fontWeight: FontWeight.bold,
         ),
@@ -162,9 +167,9 @@ class AppTheme {
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSizes.radius),
+          borderRadius: BorderRadius.circular(16),
         ),
-        side: BorderSide(color: AppColors.primaryDark),
+        side: const BorderSide(color: AppColors.primaryDark),
       ),
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -172,8 +177,8 @@ class AppTheme {
       selectedItemColor: AppColors.primary,
       unselectedItemColor: AppColors.grey,
       showUnselectedLabels: true,
-      selectedLabelStyle: TextStyle(fontSize: AppSizes.fontSmall),
-      unselectedLabelStyle: TextStyle(fontSize: AppSizes.fontSmall),
+      selectedLabelStyle: GoogleFonts.outfit(fontSize: AppSizes.fontSmall),
+      unselectedLabelStyle: GoogleFonts.outfit(fontSize: AppSizes.fontSmall),
     ),
   );
 

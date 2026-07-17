@@ -34,6 +34,33 @@ class Medicine extends HiveObject {
   @HiveField(9)
   String? durationUnit; // Days, Weeks, Months
 
+  @HiveField(10)
+  int? totalStock;
+
+  @HiveField(11)
+  int? stockThreshold;
+
+  @HiveField(12)
+  bool? isStockAlertEnabled;
+
+  @HiveField(13)
+  String? customDosage;
+
+  @HiveField(14)
+  String? applicationArea;
+
+  @HiveField(15)
+  String? usageInstruction;
+
+  @HiveField(16)
+  DateTime? startDate;
+
+  @HiveField(17)
+  int? snoozeCount;
+
+  @HiveField(18)
+  DateTime? snoozeUntil;
+
   Medicine({
     this.id,
     this.name,
@@ -45,5 +72,14 @@ class Medicine extends HiveObject {
     this.durationType = 'Nonstop',
     this.durationValue,
     this.durationUnit,
+    this.totalStock,
+    this.stockThreshold = 5,
+    this.isStockAlertEnabled = true,
+    this.customDosage,
+    this.applicationArea,
+    this.usageInstruction,
+    this.startDate,
+    this.snoozeCount = 0,
+    this.snoozeUntil,
   });
 }

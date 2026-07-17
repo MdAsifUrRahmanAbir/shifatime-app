@@ -10,9 +10,10 @@ class SplashView extends GetView<SplashController> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: AppColors.primary,
-      body: _SplashMobile(),
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Scaffold(
+      backgroundColor: isDark ? AppColors.darkScaffoldBackground : AppColors.scaffoldBackground,
+      body: const _SplashMobile(),
     );
   }
 }
@@ -56,6 +57,7 @@ class _SplashMobileState extends State<_SplashMobile>
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Center(
       child: FadeTransition(
         opacity: _fadeAnim,
@@ -68,18 +70,18 @@ class _SplashMobileState extends State<_SplashMobile>
                 width: AppSizes.logoSize,
                 height: AppSizes.logoSize,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(AppSizes.radiusLarge),
+                  color: isDark ? AppColors.darkCardBackground : Colors.white,
+                  borderRadius: BorderRadius.circular(28),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.15),
+                      color: Colors.black.withValues(alpha: 0.04),
                       blurRadius: 20,
-                      spreadRadius: 2,
+                      offset: const Offset(0, 8),
                     ),
                   ],
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(AppSizes.radiusLarge),
+                  borderRadius: BorderRadius.circular(28),
                   child: Image.asset(
                     'assets/images/app_logo.png',
                     fit: BoxFit.cover,
@@ -89,11 +91,11 @@ class _SplashMobileState extends State<_SplashMobile>
               const SizedBox(height: AppSizes.gapLarge),
               Text(
                 AppStrings.appName,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: AppSizes.fontXXXLarge,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.white,
-                  letterSpacing: 1.2,
+                  fontWeight: FontWeight.w900,
+                  color: isDark ? Colors.white : AppColors.textPrimary,
+                  letterSpacing: -0.5,
                 ),
               ),
               const SizedBox(height: AppSizes.gapXSmall),
@@ -101,16 +103,19 @@ class _SplashMobileState extends State<_SplashMobile>
                 AppStrings.appTagline,
                 style: TextStyle(
                   fontSize: AppSizes.fontMedium,
-                  color: Colors.white.withValues(alpha: 0.75),
+                  fontWeight: FontWeight.w500,
+                  color: isDark ? Colors.white70 : AppColors.textSecondary,
                 ),
               ),
               const SizedBox(height: AppSizes.splashBottomGap),
-              const SizedBox(
+              SizedBox(
                 width: AppSizes.progressIndicatorSize,
                 height: AppSizes.progressIndicatorSize,
                 child: CircularProgressIndicator(
                   strokeWidth: AppSizes.indicatorStrokeWidth,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white70),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    isDark ? Colors.white70 : AppColors.primary,
+                  ),
                 ),
               ),
             ],

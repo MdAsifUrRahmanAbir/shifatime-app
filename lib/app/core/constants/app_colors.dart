@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // --------------------
-  // Brand / Daraz Colors
+  // Brand / Premium Colors
   // --------------------
   static const Color primary = Color(0xFF2FAC66); // ShifaTime Green
   static const Color primaryDark = Color(0xFF1E7D4A);
   static const Color primaryLight = Color(0xFF2FAC66);
 
-  static const Color bg = Color(0xFFF5F5F5); // Daraz Background
-  static const Color yellow = Color(0xFFFFC200); // Daraz Yellow
+  static const Color limeAccent = Color(0xFFC9F2A5); // Mockup Lime Green
+  static const Color limeDarkText = Color(0xFF1A300E); // Dark text on lime accent
+
+  static const Color bg = Color(0xFFF7F8FA);
+  static const Color yellow = Color(0xFFFFC200);
 
   static const Color accent = Color(0xFFFFC107);
   static const Color accentLight = Color(0xFFFFF350);
@@ -18,16 +21,16 @@ class AppColors {
   // --------------------
   // Background / Scaffold
   // --------------------
-  static const Color scaffoldBackground = Color(0xFFF5F6FA);
+  static const Color scaffoldBackground = Color(0xFFF7F8FA);
   static const Color cardBackground = Colors.white;
-  static const Color darkScaffoldBackground = Color(0xFF1C1C1E);
-  static const Color darkCardBackground = Color(0xFF2C2C2E);
+  static const Color darkScaffoldBackground = Color(0xFF121212);
+  static const Color darkCardBackground = Color(0xFF1E1E1E);
 
   // --------------------
   // Text Colors
   // --------------------
-  static const Color textPrimary = Color(0xFF222222);
-  static const Color textSecondary = Color(0xFF666666);
+  static const Color textPrimary = Color(0xFF1A1C1E);
+  static const Color textSecondary = Color(0xFF70757A);
   static const Color textHint = Color(0xFF999999);
   static const Color textLight = Colors.white;
 
@@ -42,15 +45,15 @@ class AppColors {
   // --------------------
   // Grey Shades
   // --------------------
-  static const Color greyLight = Color(0xFFEEEEEE);
+  static const Color greyLight = Color(0xFFF5F6F8);
   static const Color grey = Color(0xFFBDBDBD);
-  static const Color greyDark = Color(0xFF616161);
+  static const Color greyDark = Color(0xFF2C2C2E);
 
   // --------------------
   // Optional Semantic / Extra
   // --------------------
-  static const Color divider = Color(0xFFE0E0E0);
-  static const Color shadow = Color(0x29000000);
+  static const Color divider = Color(0xFFEFEFEF);
+  static const Color shadow = Color(0x0A000000); // Sleek soft shadow
   static const Color transparent = Colors.transparent;
 
   // --------------------

@@ -109,18 +109,22 @@ class LocalStorage {
     required double height,
     required double weight,
     required double waterTarget,
+    required String gender,
   }) async {
     await _box.write(_nameKey, name);
     await _box.write(_ageKey, age);
     await _box.write(_heightKey, height);
     await _box.write(_weightKey, weight);
     await _box.write(_waterTargetKey, waterTarget);
+    await _box.write('userGender', gender);
   }
 
   static int getAge() => _box.read(_ageKey) ?? 0;
   static double getHeight() => _box.read(_heightKey) ?? 0.0;
   static double getWeight() => _box.read(_weightKey) ?? 0.0;
   static double getWaterTarget() => _box.read(_waterTargetKey) ?? 2000.0;
+  static String getGender() => _box.read('userGender') ?? 'Male';
+  static Future<void> saveGender(String gender) => _box.write('userGender', gender);
 
   // ── Water Intake ──────────────────────────────────────────────────────────
   static List<Map<String, dynamic>> getWaterLogs(String date) {
@@ -141,6 +145,22 @@ class LocalStorage {
     return total;
   }
 
+  // ── Streaks & Achievements ────────────────────────────────────────────────
+  static int getWaterStreak() => _box.read('waterStreak') ?? 0;
+  static Future<void> saveWaterStreak(int val) => _box.write('waterStreak', val);
+
+  static int getMedicineStreak() => _box.read('medicineStreak') ?? 0;
+  static Future<void> saveMedicineStreak(int val) => _box.write('medicineStreak', val);
+
+  static int getMedicinesTakenCount() => _box.read('medicinesTakenCount') ?? 0;
+  static Future<void> saveMedicinesTakenCount(int val) => _box.write('medicinesTakenCount', val);
+
+  static int getWaterGlassesCount() => _box.read('waterGlassesCount') ?? 0;
+  static Future<void> saveWaterGlassesCount(int val) => _box.write('waterGlassesCount', val);
+
+  static String getLastActiveDate() => _box.read('lastActiveDate') ?? '';
+  static Future<void> saveLastActiveDate(String date) => _box.write('lastActiveDate', date);
+
   // ── Sign Out ──────────────────────────────────────────────────────────────
   static Future<void> signOut() async {
     await _box.remove(_tokenKey);
@@ -154,4 +174,41 @@ class LocalStorage {
     await _box.remove(_waterTargetKey);
     // Keep onboard status — user has already seen it
   }
+
+  // ── Notification & Alarm Settings ─────────────────────────────────────────
+  static bool isFullScreenAlarmEnabled() => _box.read('fsAlarmEnabled') ?? true;
+  static Future<void> saveFullScreenAlarmEnabled(bool val) => _box.write('fsAlarmEnabled', val);
+
+  static bool isRepeatAlarmEnabled() => _box.read('repeatAlarmEnabled') ?? false;
+  static Future<void> saveRepeatAlarmEnabled(bool val) => _box.write('repeatAlarmEnabled', val);
+
+  static int getRepeatIntervalMinutes() => _box.read('repeatIntervalMin') ?? 5;
+  static Future<void> saveRepeatIntervalMinutes(int val) => _box.write('repeatIntervalMin', val);
+
+  static int getMaxRepeatCount() => _box.read('maxRepeatCount') ?? 3;
+  static Future<void> saveMaxRepeatCount(int val) => _box.write('maxRepeatCount', val);
+
+  static String getReminderSoundType() => _box.read('reminderSoundType') ?? 'default'; // default, custom, silent, vibrate
+  static Future<void> saveReminderSoundType(String val) => _box.write('reminderSoundType', val);
+
+  static bool isWaterReminderEnabled() => _box.read('waterReminderEnabled') ?? true;
+  static Future<void> saveWaterReminderEnabled(bool val) => _box.write('waterReminderEnabled', val);
+
+  static int getWaterFrequencyMinutes() => _box.read('waterFreqMin') ?? 60;
+  static Future<void> saveWaterFrequencyMinutes(int val) => _box.write('waterFreqMin', val);
+
+  static int getWaterStartHour() => _box.read('waterStartHour') ?? 8;
+  static Future<void> saveWaterStartHour(int val) => _box.write('waterStartHour', val);
+
+  static int getWaterStartMinute() => _box.read('waterStartMin') ?? 0;
+  static Future<void> saveWaterStartMinute(int val) => _box.write('waterStartMin', val);
+
+  static int getWaterEndHour() => _box.read('waterEndHour') ?? 22;
+  static Future<void> saveWaterEndHour(int val) => _box.write('waterEndHour', val);
+
+  static int getWaterEndMinute() => _box.read('waterEndMin') ?? 0;
+  static Future<void> saveWaterEndMinute(int val) => _box.write('waterEndMin', val);
+
+  static bool isWaterSmartStopEnabled() => _box.read('waterSmartStop') ?? true;
+  static Future<void> saveWaterSmartStopEnabled(bool val) => _box.write('waterSmartStop', val);
 }

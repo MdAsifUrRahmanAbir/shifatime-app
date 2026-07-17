@@ -40,8 +40,10 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   flutter_local_notifications: 21.0.0
-  android_alarm_manager_plus: 5.0.0
   timezone: 0.11.0
+  flutter_timezone: ^3.0.0
+  permission_handler: ^11.0.0
+  device_info_plus: ^10.0.0
 
 dev_dependencies:
   flutter_test:
@@ -58,8 +60,6 @@ flutter:
   assets:
     - assets/images/app_logo.png
     - assets/images/capsule_medicine.png
-    - assets/images/medicine_reminder_mockup.png
-    - assets/images/medicine_schedule_mockup.png
 
   # fonts:
   #   - family: Schyler

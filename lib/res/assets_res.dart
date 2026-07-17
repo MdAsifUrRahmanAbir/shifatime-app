@@ -10,6 +10,4 @@ class AssetsRes {
   static const String PROJECT_VERSION = '1.0.0+1';
   static const String APP_LOGO = 'assets/images/app_logo.png';
   static const String CAPSULE_MEDICINE = 'assets/images/capsule_medicine.png';
-  static const String MEDICINE_REMINDER_MOCKUP = 'assets/images/medicine_reminder_mockup.png';
-  static const String MEDICINE_SCHEDULE_MOCKUP = 'assets/images/medicine_schedule_mockup.png';
 }

@@ -8,6 +8,7 @@ class ProfileController extends GetxController {
   final height = 0.0.obs;
   final weight = 0.0.obs;
   final waterTarget = 0.0.obs;
+  final gender = 'Male'.obs;
 
   final bmi = 0.0.obs;
   final bmiCategory = ''.obs;
@@ -25,6 +26,7 @@ class ProfileController extends GetxController {
     height.value = LocalStorage.getHeight();
     weight.value = LocalStorage.getWeight();
     waterTarget.value = LocalStorage.getWaterTarget();
+    gender.value = LocalStorage.getGender();
 
     _calculateBMI();
   }
@@ -60,6 +62,7 @@ class ProfileController extends GetxController {
     required int ageVal,
     required double heightVal,
     required double weightVal,
+    required String genderVal,
     double? customWaterTarget,
   }) async {
     final double calculatedWaterTarget = customWaterTarget ?? (weightVal * 35.0);
@@ -70,6 +73,7 @@ class ProfileController extends GetxController {
       height: heightVal,
       weight: weightVal,
       waterTarget: calculatedWaterTarget,
+      gender: genderVal,
     );
 
     loadProfile();
