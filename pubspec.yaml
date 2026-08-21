@@ -2,7 +2,7 @@ name: my_structure
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 1.0.0+2
 
 environment:
   sdk: ^3.9.2
@@ -23,27 +23,27 @@ dependencies:
   logger: ^2.4.0
 
   # Fonts
-  google_fonts: 8.0.2
+  google_fonts: 8.2.1
 
   # UI / Widgets
   pinput: 6.0.2                  # For OTP / Pin Code
-  table_calendar: 3.2.0           # For calendar widget
-  intl: 0.20.2                    # For date formatting
+  table_calendar: 3.2.1           # For calendar widget
+  intl: 0.20.3                    # For date formatting
   cached_network_image: ^3.2.3    # For network images in avatar or cards
   flutter_svg: ^2.1.1             # For SVG icons
   url_launcher: ^6.1.11           # For opening external URLs
-  fluttertoast: 9.0.0             # Optional: for toast messages
+  fluttertoast: 10.0.0             # Optional: for toast messages
   shimmer: ^3.0.0
   skeletonizer:
 
   # ShifaTime Core
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  flutter_local_notifications: 21.0.0
-  timezone: 0.11.0
-  flutter_timezone: ^3.0.0
-  permission_handler: ^11.0.0
-  device_info_plus: ^10.0.0
+  flutter_local_notifications: 22.3.0
+  timezone: 0.11.1
+  flutter_timezone: 5.1.0
+  permission_handler: 13.0.1
+  device_info_plus: 13.2.0
 
 dev_dependencies:
   flutter_test:
@@ -54,7 +54,13 @@ dev_dependencies:
   hive_generator: ^2.0.1
   change_app_package_name: ^1.5.0
   rename_app: ^1.6.6
+  flutter_launcher_icons:
 
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/app_logo.png"
+  min_sdk_android: 21
 
 flutter:
 

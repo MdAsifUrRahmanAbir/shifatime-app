@@ -239,8 +239,11 @@ class NotificationService {
   /// Falls back to UTC if detection fails.
   static Future<void> _initializeTimezone() async {
     try {
-      final String timezoneName = await FlutterTimezone.getLocalTimezone();
-      tz.setLocalLocation(tz.getLocation(timezoneName));
+      final timezoneInfo = await FlutterTimezone.getLocalTimezone();
+
+      tz.setLocalLocation(
+        tz.getLocation(timezoneInfo.identifier),
+      );
     } catch (_) {
       // Fallback: try offset-based detection
       _setLocalTimezoneByOffset();
