@@ -29,11 +29,11 @@ class ResponsiveLayout extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth < AppSizes.mobileBreakpoint) {
-          return mobile;
+          return SafeArea(child: mobile);
         } else if (constraints.maxWidth < AppSizes.tabletBreakpoint) {
-          return tablet ?? mobile;
+          return SafeArea(child:tablet ?? mobile);
         } else {
-          return desktop ?? mobile;
+          return SafeArea(child:desktop ?? mobile);
         }
       },
     );

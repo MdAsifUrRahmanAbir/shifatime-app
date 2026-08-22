@@ -17,12 +17,18 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'My App',
       debugShowCheckedModeBanner: false,
+
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: AppTheme.themeMode,
+
       initialRoute: AppPages.initial,
       getPages: AppPages.routes,
       defaultTransition: Transition.rightToLeft,
+
+      builder: (context, child) {
+        return child ?? const SizedBox.shrink();
+      },
     );
   }
 }

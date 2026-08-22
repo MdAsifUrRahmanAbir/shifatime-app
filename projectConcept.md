@@ -1,3 +1,4 @@
+
 # ShifaTime - Product Concept & Feature Specification
 
 ## 🌟 Executive Summary
