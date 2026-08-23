@@ -51,7 +51,7 @@ class AppBottomNavBar extends StatelessWidget {
               Icons.analytics_outlined,
               'Progress',
               isSelected: current == AppNavTab.progress,
-              onTap: () => Get.offAllNamed(Routes.waterIntake),
+              onTap: () => Get.toNamed(Routes.waterIntake),
             ),
           ),
           Expanded(

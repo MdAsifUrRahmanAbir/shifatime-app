@@ -16,6 +16,8 @@ import '../modules/menu/views/menu_view.dart';
 import '../modules/medicine/views/full_screen_alarm_view.dart';
 import '../modules/menu/views/notification_settings_view.dart';
 import '../modules/menu/views/reminder_history_view.dart';
+import '../modules/inventory/views/inventory_view.dart';
+import '../modules/achievements/views/achievements_view.dart';
 
 part 'app_routes.dart';
 
@@ -77,6 +79,17 @@ class AppPages {
       name: Routes.menu,
       page: () => const MenuView(),
       transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: Routes.inventory,
+      page: () => const InventoryView(),
+      binding: MedicineBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.achievements,
+      page: () => const AchievementsView(),
+      transition: Transition.rightToLeft,
     ),
     GetPage(
       name: Routes.notificationSettings,

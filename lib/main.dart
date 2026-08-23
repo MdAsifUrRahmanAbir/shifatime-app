@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'My App',
+      title: 'ShifaTime',
       debugShowCheckedModeBanner: false,
 
       theme: AppTheme.lightTheme,

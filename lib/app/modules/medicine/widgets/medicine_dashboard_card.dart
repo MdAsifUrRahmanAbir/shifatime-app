@@ -10,14 +10,24 @@ import 'medicine_delete_dialog.dart';
 
 class MedicineDashboardCard extends GetView<MedicineController> {
   final Medicine medicine;
+  final DateTime? date;
 
-  const MedicineDashboardCard({super.key, required this.medicine});
+  const MedicineDashboardCard({super.key, required this.medicine, this.date});
+
+  bool _isToday(DateTime d) {
+    final now = DateTime.now();
+    return d.year == now.year && d.month == now.month && d.day == now.day;
+  }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final doses = controller.todayDoses.where((d) => d.medicineId == medicine.id).toList();
-    final nextPending = doses.firstWhereOrNull((d) => d.status == 'pending' || d.status == 'snoozed' || d.status == 'missed');
+    final targetDate = date ?? DateTime.now();
+    final isTodayCard = _isToday(targetDate);
+    final doses = controller.dosesForMedicineOnDate(medicine.id!, targetDate);
+    final nextPending = isTodayCard
+        ? doses.firstWhereOrNull((d) => d.status == 'pending' || d.status == 'snoozed' || d.status == 'missed')
+        : null;
 
     final bool isCompletedToday = doses.isNotEmpty && doses.every((d) => d.status == 'taken');
     final bool isSkippedToday = doses.isNotEmpty && doses.every((d) => d.status == 'skipped');

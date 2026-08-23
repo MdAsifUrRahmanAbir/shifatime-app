@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../widgets/gender_avatar.dart';
 import '../controllers/profile_controller.dart';
 import 'bmi_card.dart';
 import 'profile_edit_bottom_sheet.dart';
@@ -32,10 +33,7 @@ class ProfileBody extends StatelessWidget {
                     shape: BoxShape.circle,
                     border: Border.all(color: AppColors.limeAccent, width: 3),
                   ),
-                  child: const CircleAvatar(
-                    radius: 46,
-                    backgroundImage: NetworkImage('https://i.pravatar.cc/150?u=shifatime_user'),
-                  ),
+                  child: Obx(() => GenderAvatar(gender: controller.gender.value, radius: 46)),
                 ),
                 const SizedBox(height: 16),
                 Obx(() => Text(

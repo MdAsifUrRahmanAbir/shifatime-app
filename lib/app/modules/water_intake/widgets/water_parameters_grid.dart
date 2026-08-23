@@ -77,21 +77,33 @@ class WaterParametersGrid extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  // Small waveform illustration
+                  // Small waveform illustration — reflects today's most recent log amounts.
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    children: List.generate(12, (index) {
-                      final heights = [14.0, 8.0, 22.0, 12.0, 18.0, 6.0, 16.0, 26.0, 10.0, 14.0, 20.0, 8.0];
-                      return Container(
-                        width: 3,
-                        height: heights[index],
-                        decoration: BoxDecoration(
-                          color: AppColors.primary.withValues(alpha: 0.5),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      );
-                    }),
+                    children: () {
+                      final amounts = controller.logs.reversed
+                          .map((l) => (l['amount'] as num?)?.toDouble() ?? 0.0)
+                          .toList();
+                      final recent = amounts.length > 12 ? amounts.sublist(amounts.length - 12) : amounts;
+                      final maxAmt = recent.isEmpty ? 1.0 : recent.reduce((a, b) => a > b ? a : b);
+                      final pad = 12 - recent.length;
+
+                      return List.generate(12, (index) {
+                        final i = index - pad;
+                        final height = i < 0
+                            ? 6.0
+                            : (maxAmt > 0 ? 6.0 + (recent[i] / maxAmt) * 20.0 : 6.0);
+                        return Container(
+                          width: 3,
+                          height: height,
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withValues(alpha: 0.5),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        );
+                      });
+                    }(),
                   ),
                 ],
               ),
@@ -166,7 +178,7 @@ class WaterParametersGrid extends StatelessWidget {
                       Expanded(
                         child: CustomPaint(
                           size: const Size(double.infinity, 18),
-                          painter: SparklinePainter(isDark: isDark),
+                          painter: SparklinePainter(isDark: isDark, values: controller.weeklyTotals.toList()),
                         ),
                       ),
                     ],

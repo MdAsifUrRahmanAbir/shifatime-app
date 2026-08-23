@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../routes/app_pages.dart';
+import '../../../widgets/gender_avatar.dart';
 import '../../profile/controllers/profile_controller.dart';
 
 class MedicineHomeHeader extends StatelessWidget {
@@ -29,19 +30,14 @@ class MedicineHomeHeader extends StatelessWidget {
                     shape: BoxShape.circle,
                     border: Border.all(color: AppColors.limeAccent, width: 2),
                   ),
-                  child: const CircleAvatar(
-                    radius: 20,
-                    backgroundImage: NetworkImage(
-                      'https://i.pravatar.cc/150?u=shifatime_user',
-                    ),
-                  ),
+                  child: Obx(() => GenderAvatar(gender: profileCtrl.gender.value, radius: 20)),
                 ),
                 const SizedBox(width: 12),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Good morning!',
+                      _greeting(),
                       style: GoogleFonts.outfit(
                         color: Colors.grey,
                         fontSize: 12,
@@ -90,6 +86,15 @@ class MedicineHomeHeader extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _greeting() {
+    final hour = DateTime.now().hour;
+    if (hour < 5) return 'Good night!';
+    if (hour < 12) return 'Good morning!';
+    if (hour < 17) return 'Good afternoon!';
+    if (hour < 21) return 'Good evening!';
+    return 'Good night!';
   }
 
   Widget _buildHeaderIconButton(BuildContext context, IconData icon, {bool hasDot = false, VoidCallback? onTap}) {

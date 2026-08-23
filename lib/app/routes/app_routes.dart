@@ -13,6 +13,8 @@ abstract class Routes {
   static const medicineDetails = '/medicine_details';
   static const healthTips = '/health_tips';
   static const menu = '/menu';
+  static const inventory = '/inventory';
+  static const achievements = '/achievements';
   static const notificationSettings = '/notification_settings';
   static const reminderHistory = '/reminder_history';
   static const fullScreenAlarm = '/full_screen_alarm';

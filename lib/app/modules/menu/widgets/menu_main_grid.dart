@@ -3,21 +3,18 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../routes/app_pages.dart';
+import '../../../widgets/gender_avatar.dart';
 import '../../profile/controllers/profile_controller.dart';
 
 class MenuMainGrid extends StatelessWidget {
   final bool isDark;
   final ProfileController profileCtrl;
-  final VoidCallback onInventoryTap;
-  final VoidCallback onAchievementsTap;
   final VoidCallback onThemeToggle;
 
   const MenuMainGrid({
     super.key,
     required this.isDark,
     required this.profileCtrl,
-    required this.onInventoryTap,
-    required this.onAchievementsTap,
     required this.onThemeToggle,
   });
 
@@ -50,12 +47,7 @@ class MenuMainGrid extends StatelessWidget {
                     shape: BoxShape.circle,
                     border: Border.all(color: AppColors.limeAccent, width: 2),
                   ),
-                  child: const CircleAvatar(
-                    radius: 28,
-                    backgroundImage: NetworkImage(
-                      'https://i.pravatar.cc/150?u=shifatime_user',
-                    ),
-                  ),
+                  child: Obx(() => GenderAvatar(gender: profileCtrl.gender.value, radius: 28)),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
@@ -113,7 +105,7 @@ class MenuMainGrid extends StatelessWidget {
                 'Manage remaining pills',
                 Icons.inventory_2_rounded,
                 Colors.orange,
-                onInventoryTap,
+                () => Get.toNamed(Routes.inventory),
               ),
               _buildMenuCard(
                 isDark,
@@ -121,7 +113,7 @@ class MenuMainGrid extends StatelessWidget {
                 'Streak logs & awards',
                 Icons.stars_rounded,
                 Colors.amber,
-                onAchievementsTap,
+                () => Get.toNamed(Routes.achievements),
               ),
               _buildMenuCard(
                 isDark,

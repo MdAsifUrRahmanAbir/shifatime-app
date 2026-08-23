@@ -12,6 +12,7 @@ class MedicineController extends GetxController {
 
   var medicines = <Medicine>[].obs;
   var todayDoses = <DoseRecord>[].obs;
+  final selectedDate = DateTime.now().obs;
 
   @override
   void onInit() {
@@ -158,7 +159,7 @@ class MedicineController extends GetxController {
 
 
   void _generateDoseRecordsForDate(Medicine medicine, DateTime date) {
-    if (!_isMedicineScheduledForDate(medicine, date)) return;
+    if (!isMedicineScheduledForDate(medicine, date)) return;
 
     final dateStr = '${date.year}_${date.month.toString().padLeft(2, '0')}_${date.day.toString().padLeft(2, '0')}';
 
@@ -287,7 +288,30 @@ class MedicineController extends GetxController {
     }
   }
 
-  bool _isMedicineScheduledForDate(Medicine medicine, DateTime date) {
+  void selectDate(DateTime date) {
+    selectedDate.value = DateTime(date.year, date.month, date.day);
+  }
+
+  /// Doses for [medicineId] on [date]. Reuses the reactive `todayDoses` list
+  /// when [date] is today so UI stays live; otherwise reads directly from the
+  /// dose box (no records are generated for dates other than today/tomorrow).
+  List<DoseRecord> dosesForMedicineOnDate(String medicineId, DateTime date) {
+    final key = _dateKey(date);
+    if (key == _dateKey(DateTime.now())) {
+      return todayDoses.where((d) => d.medicineId == medicineId).toList();
+    }
+    final list = doseBox.values.where((d) => d.medicineId == medicineId && d.dateStr == key).toList();
+    list.sort((a, b) => (a.timeStr ?? '').compareTo(b.timeStr ?? ''));
+    return list;
+  }
+
+  /// Medicines actually scheduled/active on [date] (respects duration limits
+  /// and specific-days recurrence), used to render the calendar-driven list.
+  List<Medicine> medicinesForDate(DateTime date) {
+    return medicines.where((m) => isMedicineScheduledForDate(m, date)).toList();
+  }
+
+  bool isMedicineScheduledForDate(Medicine medicine, DateTime date) {
     if (!medicine.isActive!) return false;
     final startDate = medicine.startDate ?? date;
 

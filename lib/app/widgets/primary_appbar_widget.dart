@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../core/constants/app_colors.dart';
 import '../core/constants/app_sizes.dart';
 
@@ -67,8 +68,7 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
                           : AppColors.textPrimary,
                     ),
                   ),
-                  onPressed:
-                      onBackPressed ?? () => Navigator.of(context).maybePop(),
+                  onPressed: onBackPressed ?? () => Get.back(),
                 )
               : null),
       title: Text(

@@ -9,6 +9,9 @@ class WaterIntakeController extends GetxController {
   final consumedMl = 0.0.obs;
   final logs = <Map<String, dynamic>>[].obs;
 
+  /// Totals in ml for the last 7 days, oldest first, last entry is today.
+  final weeklyTotals = <double>[].obs;
+
   late final String dateKey;
   final formattedDate = ''.obs;
   final formattedDay = ''.obs;
@@ -88,6 +91,18 @@ class WaterIntakeController extends GetxController {
       total += (log['amount'] as num?)?.toDouble() ?? 0.0;
     }
     consumedMl.value = total;
+    _calculateWeeklyTotals();
+  }
+
+  void _calculateWeeklyTotals() {
+    final now = DateTime.now();
+    final totals = <double>[];
+    for (int i = 6; i >= 0; i--) {
+      final day = now.subtract(Duration(days: i));
+      final key = DateFormat('yyyy_MM_dd').format(day);
+      totals.add(key == dateKey ? consumedMl.value : LocalStorage.getWaterIntake(key));
+    }
+    weeklyTotals.assignAll(totals);
   }
 
   Future<void> updateTarget(double target) async {

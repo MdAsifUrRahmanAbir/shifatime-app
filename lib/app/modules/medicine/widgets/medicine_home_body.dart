@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import '../../../core/constants/app_colors.dart';
 import '../controllers/medicine_controller.dart';
 import '../../water_intake/controllers/water_intake_controller.dart';
@@ -49,46 +50,55 @@ class MedicineHomeBody extends GetView<MedicineController> {
 
                 const SizedBox(height: 24),
                 // 4. Calendar Strip Row
-                const MedicineCalendarBar(),
+                Obx(() => MedicineCalendarBar(
+                      selectedDate: controller.selectedDate.value,
+                      onDateSelected: controller.selectDate,
+                    )),
 
                 const SizedBox(height: 16),
-                // 5. Today's Medicine Reminders Title
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Today's Schedule",
-                      style: GoogleFonts.outfit(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: isDark ? Colors.white : AppColors.textPrimary,
+                // 5. Medicine Reminders Title (reflects the selected date)
+                Obx(() {
+                  final selected = controller.selectedDate.value;
+                  final now = DateTime.now();
+                  final isToday = selected.year == now.year && selected.month == now.month && selected.day == now.day;
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        isToday ? "Today's Schedule" : DateFormat('EEE, dd MMM').format(selected),
+                        style: GoogleFonts.outfit(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: isDark ? Colors.white : AppColors.textPrimary,
+                        ),
                       ),
-                    ),
-                    Text(
-                      "Swipe/Hold to Delete",
-                      style: GoogleFonts.outfit(
-                        fontSize: 12,
-                        color: Colors.grey,
+                      Text(
+                        "Swipe/Hold to Delete",
+                        style: GoogleFonts.outfit(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  );
+                }),
                 const SizedBox(height: 12),
 
-                // 6. Medicine Reminders List (One Card Per Medicine)
+                // 6. Medicine Reminders List (One Card Per Medicine, scoped to the selected date)
                 Obx(() {
-                  if (controller.medicines.isEmpty) {
+                  final selected = controller.selectedDate.value;
+                  final list = controller.medicinesForDate(selected);
+                  if (list.isEmpty) {
                     return const MedicineEmptyState();
                   }
 
                   return ListView.separated(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: controller.medicines.length,
+                    itemCount: list.length,
                     separatorBuilder: (context, index) => const SizedBox(height: 12),
                     itemBuilder: (context, index) {
-                      final medicine = controller.medicines[index];
-                      return MedicineDashboardCard(medicine: medicine);
+                      return MedicineDashboardCard(medicine: list[index], date: selected);
                     },
                   );
                 }),
