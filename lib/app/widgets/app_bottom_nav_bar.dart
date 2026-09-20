@@ -19,7 +19,7 @@ class AppBottomNavBar extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      height: 80,
+      height: 89,
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkCardBackground : Colors.white,
         borderRadius: const BorderRadius.only(
