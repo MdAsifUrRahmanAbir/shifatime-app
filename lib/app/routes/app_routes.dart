@@ -18,4 +18,12 @@ abstract class Routes {
   static const notificationSettings = '/notification_settings';
   static const reminderHistory = '/reminder_history';
   static const fullScreenAlarm = '/full_screen_alarm';
+
+  // ── Health Reports (new) ──────────────────────────────────────────────────
+  static const testReport = '/test_report';
+  static const addTestReport = '/add_test_report';
+  static const diabetesReport = '/diabetes_report';
+  static const addDiabetesRecord = '/add_diabetes_record';
+  static const pressureReport = '/pressure_report';
+  static const addPressureRecord = '/add_pressure_record';
 }

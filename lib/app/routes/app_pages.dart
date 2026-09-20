@@ -19,6 +19,17 @@ import '../modules/menu/views/reminder_history_view.dart';
 import '../modules/inventory/views/inventory_view.dart';
 import '../modules/achievements/views/achievements_view.dart';
 
+// ── Health Reports (new) ────────────────────────────────────────────────────
+import '../modules/test_report/bindings/test_report_binding.dart';
+import '../modules/test_report/views/test_report_view.dart';
+import '../modules/test_report/views/add_test_report_view.dart';
+import '../modules/diabetes_report/bindings/diabetes_report_binding.dart';
+import '../modules/diabetes_report/views/diabetes_report_view.dart';
+import '../modules/diabetes_report/views/add_diabetes_record_view.dart';
+import '../modules/pressure_report/bindings/pressure_report_binding.dart';
+import '../modules/pressure_report/views/pressure_report_view.dart';
+import '../modules/pressure_report/views/add_pressure_record_view.dart';
+
 part 'app_routes.dart';
 
 /// GetX route configuration — all pages registered here.
@@ -106,6 +117,44 @@ class AppPages {
       page: () => const FullScreenAlarmView(),
       binding: MedicineBinding(),
       transition: Transition.fadeIn,
+    ),
+
+    // ── Health Reports (new) ────────────────────────────────────────────────
+    GetPage(
+      name: Routes.testReport,
+      page: () => const TestReportView(),
+      binding: TestReportBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.addTestReport,
+      page: () => const AddTestReportView(),
+      binding: TestReportBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.diabetesReport,
+      page: () => const DiabetesReportView(),
+      binding: DiabetesReportBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.addDiabetesRecord,
+      page: () => const AddDiabetesRecordView(),
+      binding: DiabetesReportBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.pressureReport,
+      page: () => const PressureReportView(),
+      binding: PressureReportBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.addPressureRecord,
+      page: () => const AddPressureRecordView(),
+      binding: PressureReportBinding(),
+      transition: Transition.rightToLeft,
     ),
   ];
 }
