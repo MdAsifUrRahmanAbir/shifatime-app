@@ -11,6 +11,7 @@ import 'app/data/models/test_report_model.dart';
 import 'app/data/models/diabetes_record_model.dart';
 import 'app/data/models/pressure_record_model.dart';
 import 'app/core/services/notification_service.dart';
+import 'app/core/services/ad_service.dart';
 
 class AppInitial {
   static Future<void> init() async {
@@ -36,6 +37,10 @@ class AppInitial {
     // ─── Init Notifications (timezone + channels + plugin) ────────────────────
     // Must be called BEFORE runApp so zonedSchedule() works correctly.
     await NotificationService.init();
+
+    // ─── AdMob (consent + SDK init) ───────────────────────────────────────────
+    // Not awaited: ads must never delay startup or alarm handling.
+    AdService.init();
 
     // ─── System UI ────────────────────────────────────────────────────────────
     await SystemChrome.setPreferredOrientations([

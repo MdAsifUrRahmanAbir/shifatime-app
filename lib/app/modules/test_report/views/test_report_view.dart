@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/services/pdf_export_service.dart';
 import '../../../core/utils/responsive_layout.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/test_report_controller.dart';
@@ -23,6 +24,15 @@ class TestReportView extends GetView<TestReportController> {
           icon: Icon(Icons.arrow_back_ios_new_rounded, color: isDark ? Colors.white : AppColors.textPrimary),
           onPressed: () => Get.back(),
         ),
+        actions: [
+          Obx(() => IconButton(
+                icon: Icon(Icons.ios_share_rounded, color: isDark ? Colors.white : AppColors.textPrimary),
+                tooltip: 'Share All',
+                onPressed: controller.reports.isEmpty
+                    ? null
+                    : () => PdfExportService.shareTestReports(controller.reports),
+              )),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,

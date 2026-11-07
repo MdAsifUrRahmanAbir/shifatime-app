@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/services/pdf_export_service.dart';
 import '../../../data/models/diabetes_record_model.dart';
 
 class DiabetesRecordCard extends StatelessWidget {
@@ -81,6 +82,15 @@ class DiabetesRecordCard extends StatelessWidget {
                 Text(
                   record.unit ?? 'mg/dL',
                   style: GoogleFonts.outfit(fontSize: 11, color: Colors.grey),
+                ),
+                const SizedBox(height: 4),
+                InkWell(
+                  borderRadius: BorderRadius.circular(20),
+                  onTap: () => PdfExportService.shareSingleDiabetesRecord(record),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: Icon(Icons.ios_share_rounded, size: 18, color: Colors.grey[500]),
+                  ),
                 ),
               ],
             ),

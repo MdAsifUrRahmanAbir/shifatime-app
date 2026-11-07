@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/services/ad_service.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../controllers/medicine_controller.dart';
@@ -1030,6 +1031,7 @@ class _AddMedicineViewState extends State<AddMedicineView> {
 
     controller.addMedicine(medicine);
     Get.back();
+    AdService.showInterstitial();
     Get.snackbar(
       'Success 🎉',
       'Medicine scheduled successfully',

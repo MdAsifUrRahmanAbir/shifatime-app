@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/services/pdf_export_service.dart';
 import '../../../data/models/pressure_record_model.dart';
 
 class PressureRecordCard extends StatelessWidget {
@@ -69,13 +70,27 @@ class PressureRecordCard extends StatelessWidget {
                 ],
               ),
             ),
-            Text(
-              '${record.systolic ?? '-'}/${record.diastolic ?? '-'}',
-              style: GoogleFonts.outfit(
-                fontSize: 17,
-                fontWeight: FontWeight.bold,
-                color: isHigh ? AppColors.error : AppColors.textPrimary,
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  '${record.systolic ?? '-'}/${record.diastolic ?? '-'}',
+                  style: GoogleFonts.outfit(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: isHigh ? AppColors.error : AppColors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                InkWell(
+                  borderRadius: BorderRadius.circular(20),
+                  onTap: () => PdfExportService.shareSinglePressureRecord(record),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: Icon(Icons.ios_share_rounded, size: 18, color: Colors.grey[500]),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/services/ad_service.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_colors.dart';
@@ -46,6 +47,7 @@ class _AddPressureRecordViewState extends State<AddPressureRecordView> {
 
     AppSnackBar.success('Pressure reading saved');
     Get.back();
+    AdService.showInterstitial();
   }
 
   @override

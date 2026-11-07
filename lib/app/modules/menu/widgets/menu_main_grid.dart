@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/services/pdf_export_service.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/gender_avatar.dart';
 import '../../profile/controllers/profile_controller.dart';
@@ -138,6 +139,14 @@ class MenuMainGrid extends StatelessWidget {
                 Icons.favorite_rounded,
                 Colors.pinkAccent,
                     () => Get.toNamed(Routes.pressureReport),
+              ),
+              _buildMenuCard(
+                isDark,
+                'Health Summary',
+                'Share full report as PDF',
+                Icons.summarize_rounded,
+                Colors.deepPurple,
+                    () => PdfExportService.shareFullHealthSummary(),
               ),
               _buildMenuCard(
                 isDark,

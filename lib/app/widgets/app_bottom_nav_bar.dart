@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../core/constants/app_colors.dart';
 import '../routes/app_pages.dart';
+import 'banner_ad_widget.dart';
 
 /// Which tab of the shared bottom nav bar is currently active.
 enum AppNavTab { home, progress, add, blog, menu }
@@ -18,89 +19,96 @@ class AppBottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Container(
-      height: 89,
-      decoration: BoxDecoration(
-        color: isDark ? AppColors.darkCardBackground : Colors.white,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(28),
-          topRight: Radius.circular(28),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 20,
-            offset: const Offset(0, -4),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: _buildNavBarItem(
-              context,
-              Icons.home_rounded,
-              'Home',
-              isSelected: current == AppNavTab.home,
-              onTap: () => Get.offAllNamed(Routes.medicine),
+    // Banner sits just above the nav bar on every tab-root screen.
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const BannerAdWidget(),
+        Container(
+          height: 89,
+          decoration: BoxDecoration(
+            color: isDark ? AppColors.darkCardBackground : Colors.white,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(28),
+              topRight: Radius.circular(28),
             ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.03),
+                blurRadius: 20,
+                offset: const Offset(0, -4),
+              ),
+            ],
           ),
-          Expanded(
-            child: _buildNavBarItem(
-              context,
-              Icons.analytics_outlined,
-              'Progress',
-              isSelected: current == AppNavTab.progress,
-              onTap: () => Get.toNamed(Routes.waterIntake),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: GestureDetector(
-                onTap: () => Get.toNamed(Routes.addMedicine),
-                child: Container(
-                  width: 54,
-                  height: 54,
-                  decoration: BoxDecoration(
-                    color: AppColors.limeAccent,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.limeAccent.withValues(alpha: 0.4),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
+          child: Row(
+            children: [
+              Expanded(
+                child: _buildNavBarItem(
+                  context,
+                  Icons.home_rounded,
+                  'Home',
+                  isSelected: current == AppNavTab.home,
+                  onTap: () => Get.offAllNamed(Routes.medicine),
+                ),
+              ),
+              Expanded(
+                child: _buildNavBarItem(
+                  context,
+                  Icons.analytics_outlined,
+                  'Progress',
+                  isSelected: current == AppNavTab.progress,
+                  onTap: () => Get.toNamed(Routes.waterIntake),
+                ),
+              ),
+              Expanded(
+                child: Center(
+                  child: GestureDetector(
+                    onTap: () => Get.toNamed(Routes.addMedicine),
+                    child: Container(
+                      width: 54,
+                      height: 54,
+                      decoration: BoxDecoration(
+                        color: AppColors.limeAccent,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.limeAccent.withValues(alpha: 0.4),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  child: const Icon(
-                    Icons.add_rounded,
-                    color: AppColors.limeDarkText,
-                    size: 28,
+                      child: const Icon(
+                        Icons.add_rounded,
+                        color: AppColors.limeDarkText,
+                        size: 28,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+              Expanded(
+                child: _buildNavBarItem(
+                  context,
+                  Icons.library_books_outlined,
+                  'Blog',
+                  isSelected: current == AppNavTab.blog,
+                  onTap: () => Get.offAllNamed(Routes.healthTips),
+                ),
+              ),
+              Expanded(
+                child: _buildNavBarItem(
+                  context,
+                  Icons.menu_rounded,
+                  'Menu',
+                  isSelected: current == AppNavTab.menu,
+                  onTap: () => Get.offAllNamed(Routes.menu),
+                ),
+              ),
+            ],
           ),
-          Expanded(
-            child: _buildNavBarItem(
-              context,
-              Icons.library_books_outlined,
-              'Blog',
-              isSelected: current == AppNavTab.blog,
-              onTap: () => Get.offAllNamed(Routes.healthTips),
-            ),
-          ),
-          Expanded(
-            child: _buildNavBarItem(
-              context,
-              Icons.menu_rounded,
-              'Menu',
-              isSelected: current == AppNavTab.menu,
-              onTap: () => Get.offAllNamed(Routes.menu),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

@@ -12,7 +12,11 @@ This file serves as a comprehensive system guide and instructions manual for the
 - Persisting all data locally using **Hive** (medicines, dose records, activity logs).
 - Lightweight preferences and settings stored via **GetStorage**.
 
-**Offline-First Architecture**: The application operates **100% locally**. It contains no Firebase configurations, no external backend integrations, and no network API clients. All data lives on the device.
+**Offline-First Architecture**: All app features work **without internet** and all user data (medicines, doses, health records) lives on the device. There is no backend or account system. The only network use is:
+- **AdMob** (Android): banner + interstitial ads via `AdService` (`lib/app/core/services/ad_service.dart`). Consent is collected with UMP before any ad request. Debug builds use Google test ad units automatically.
+- **Firebase (web only)**: `firebase_core` + `firebase_analytics` power the web landing page. Analytics is **deactivated in the Android app** via a manifest meta-data flag.
+
+**Web build**: `main()` checks `kIsWeb` and runs `LandingApp` (`lib/app/modules/landing/`), a marketing page that links to Google Play. The reminder app (Hive, notifications, alarms) never runs in the browser. Hosted on Firebase Hosting (`firebase deploy` builds `build/web` via the predeploy hook); `web/app-ads.txt` is served at the site root for AdMob verification.
 
 ---
 
@@ -31,6 +35,10 @@ This file serves as a comprehensive system guide and instructions manual for the
 | **`google_fonts`** | `8.0.2` | Outfit font family for all typography. |
 | **`hive_generator`** | `^2.0.1` | (dev) Generates `*.g.dart` Hive adapters from `@HiveType` annotations. |
 | **`build_runner`** | latest | (dev) Runs code generation for Hive adapters. |
+| **`google_mobile_ads`** | `^9.2.0` | AdMob banner + interstitial (Android). Use `AdService` and `BannerAdWidget`; never create ads inline. |
+| **`firebase_core`** / **`firebase_analytics`** | `^5.1.0` / `^13.0.1` | Web landing page only. |
+
+> ⚠️ **Ads rules**: Never show an interstitial on alarm/notification flows (`FullScreenAlarmView`, background handlers). Only call `AdService.showInterstitial()` after the user finishes a task; it is frequency-capped (3 min).
 
 > ❌ **Do NOT add**: `firebase_messaging`, `workmanager`, `background_fetch`, `android_alarm_manager_plus` — none are needed for a local alarm app and they were previously removed.
 

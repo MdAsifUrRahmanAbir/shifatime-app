@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/services/pdf_export_service.dart';
 import '../../../data/models/test_report_model.dart';
 
 class TestReportCard extends StatelessWidget {
@@ -82,6 +83,15 @@ class TestReportCard extends StatelessWidget {
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: AppColors.primary,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                InkWell(
+                  borderRadius: BorderRadius.circular(20),
+                  onTap: () => PdfExportService.shareSingleTestReport(report),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: Icon(Icons.ios_share_rounded, size: 18, color: Colors.grey[500]),
                   ),
                 ),
               ],

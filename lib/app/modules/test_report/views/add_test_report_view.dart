@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/services/ad_service.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_colors.dart';
@@ -52,6 +53,7 @@ class _AddTestReportViewState extends State<AddTestReportView> {
 
     AppSnackBar.success('Test report saved');
     Get.back();
+    AdService.showInterstitial();
   }
 
   @override

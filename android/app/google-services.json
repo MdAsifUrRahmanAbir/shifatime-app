@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:188211245225:android:305ee0b5e3951d49c139b8",
+        "android_client_info": {
+          "package_name": "com.abirdev.shifatime"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbs0EG9CZVtFVOWbUB9Jn4qv8kfu6UFAg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:188211245225:android:db8b2bbe1ededd51c139b8",
         "android_client_info": {
           "package_name": "com.example.my_structure"
