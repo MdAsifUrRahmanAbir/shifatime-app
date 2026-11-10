@@ -8,6 +8,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'app/data/models/medicine_model.dart';
 import 'app/data/models/dose_record_model.dart';
 import 'app/data/models/test_report_model.dart';
+import 'app/data/models/test_parameter_model.dart';
 import 'app/data/models/diabetes_record_model.dart';
 import 'app/data/models/pressure_record_model.dart';
 import 'app/core/services/notification_service.dart';
@@ -27,6 +28,7 @@ class AppInitial {
     Hive.registerAdapter(TestReportAdapter());
     Hive.registerAdapter(DiabetesRecordAdapter());
     Hive.registerAdapter(PressureRecordAdapter());
+    Hive.registerAdapter(TestParameterAdapter());
     await Hive.openBox<Medicine>('medicines');
     await Hive.openBox<DoseRecord>('dose_records');
     await Hive.openBox('activity_logs');

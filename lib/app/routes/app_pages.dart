@@ -16,6 +16,7 @@ import '../modules/menu/views/menu_view.dart';
 import '../modules/medicine/views/full_screen_alarm_view.dart';
 import '../modules/menu/views/notification_settings_view.dart';
 import '../modules/menu/views/reminder_history_view.dart';
+import '../modules/menu/views/notifications_view.dart';
 import '../modules/inventory/views/inventory_view.dart';
 import '../modules/achievements/views/achievements_view.dart';
 
@@ -23,6 +24,10 @@ import '../modules/achievements/views/achievements_view.dart';
 import '../modules/test_report/bindings/test_report_binding.dart';
 import '../modules/test_report/views/test_report_view.dart';
 import '../modules/test_report/views/add_test_report_view.dart';
+import '../modules/test_report/views/test_report_detail_view.dart';
+import '../modules/health_summary/bindings/health_summary_binding.dart';
+import '../modules/health_summary/views/health_summary_view.dart';
+import '../modules/achievements/bindings/achievements_binding.dart';
 import '../modules/diabetes_report/bindings/diabetes_report_binding.dart';
 import '../modules/diabetes_report/views/diabetes_report_view.dart';
 import '../modules/diabetes_report/views/add_diabetes_record_view.dart';
@@ -100,6 +105,7 @@ class AppPages {
     GetPage(
       name: Routes.achievements,
       page: () => const AchievementsView(),
+      binding: AchievementsBinding(),
       transition: Transition.rightToLeft,
     ),
     GetPage(
@@ -110,6 +116,11 @@ class AppPages {
     GetPage(
       name: Routes.reminderHistory,
       page: () => const ReminderHistoryView(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.notifications,
+      page: () => const NotificationsView(),
       transition: Transition.rightToLeft,
     ),
     GetPage(
@@ -130,6 +141,18 @@ class AppPages {
       name: Routes.addTestReport,
       page: () => const AddTestReportView(),
       binding: TestReportBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.testReportDetail,
+      page: () => const TestReportDetailView(),
+      binding: TestReportBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.healthSummary,
+      page: () => const HealthSummaryView(),
+      binding: HealthSummaryBinding(),
       transition: Transition.rightToLeft,
     ),
     GetPage(

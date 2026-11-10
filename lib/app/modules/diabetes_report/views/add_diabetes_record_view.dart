@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
-import '../../../core/services/ad_service.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import '../../../core/constants/app_colors.dart';
+import '../../../core/services/ad_service.dart';
 import '../../../core/services/app_snackbar.dart';
+import '../../../core/services/health_analytics.dart';
 import '../../../core/utils/responsive_layout.dart';
+import '../../../data/models/diabetes_record_model.dart';
+import '../../../widgets/health_widgets.dart';
 import '../../../widgets/primary_button.dart';
-import '../../../widgets/primary_input_field.dart';
 import '../../../widgets/primary_dropdown.dart';
-import '../../../widgets/primary_date_picker.dart';
+import '../../../widgets/primary_input_field.dart';
 import '../controllers/diabetes_report_controller.dart';
 
+/// Add or edit a blood sugar reading. Pass a [DiabetesRecord] as
+/// Get.arguments to edit.
 class AddDiabetesRecordView extends StatefulWidget {
   const AddDiabetesRecordView({super.key});
 
@@ -25,9 +30,29 @@ class _AddDiabetesRecordViewState extends State<AddDiabetesRecordView> {
   final valueController = TextEditingController();
   final notesController = TextEditingController();
 
+  DiabetesRecord? editing;
   String selectedUnit = 'mg/dL';
   String selectedType = 'Fasting';
   DateTime selectedDate = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    final arg = Get.arguments;
+    if (arg is DiabetesRecord) {
+      editing = arg;
+      final v = arg.value ?? 0;
+      valueController.text = arg.unit == 'mmol/L' ? v.toStringAsFixed(1) : v.toStringAsFixed(0);
+      notesController.text = arg.notes ?? '';
+      selectedUnit = arg.unit ?? 'mg/dL';
+      selectedType = DiabetesReportController.readingTypes.contains(arg.readingType) ? arg.readingType! : 'Random';
+      selectedDate = arg.recordDate ?? DateTime.now();
+    } else {
+      // Sensible default type from time of day.
+      final h = DateTime.now().hour;
+      selectedType = h < 10 ? 'Fasting' : (h >= 21 ? 'Bedtime' : 'Post Prandial (PP)');
+    }
+  }
 
   @override
   void dispose() {
@@ -38,28 +63,30 @@ class _AddDiabetesRecordViewState extends State<AddDiabetesRecordView> {
 
   void _save() {
     if (!_formKey.currentState!.validate()) return;
-
-    controller.addRecord(
-      value: double.tryParse(valueController.text.trim()) ?? 0,
+    controller.saveRecord(
+      editId: editing?.id,
+      value: double.parse(valueController.text.trim()),
       unit: selectedUnit,
       readingType: selectedType,
       recordDate: selectedDate,
       notes: notesController.text.trim().isEmpty ? null : notesController.text.trim(),
     );
-
-    AppSnackBar.success('Blood sugar reading saved');
     Get.back();
-    AdService.showInterstitial();
+    AppSnackBar.success(editing == null ? 'Blood sugar reading saved' : 'Reading updated');
+    if (editing == null) AdService.showInterstitial();
   }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final v = double.tryParse(valueController.text.trim());
+    final status = v == null ? HealthStatus.unknown : HealthAnalytics.sugarStatus(v, selectedUnit, selectedType);
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.darkScaffoldBackground : AppColors.scaffoldBackground,
       appBar: AppBar(
-        title: Text('Add Blood Sugar Reading', style: GoogleFonts.outfit(fontWeight: FontWeight.bold)),
+        title: Text(editing == null ? 'Add Blood Sugar' : 'Edit Reading',
+            style: GoogleFonts.outfit(fontWeight: FontWeight.bold)),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new_rounded, color: isDark ? Colors.white : AppColors.textPrimary),
@@ -76,17 +103,21 @@ class _AddDiabetesRecordViewState extends State<AddDiabetesRecordView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
                       flex: 3,
                       child: PrimaryInputField(
-                        label: 'Blood Sugar Value',
-                        hint: 'e.g. 110',
+                        label: 'Blood sugar',
+                        hint: selectedUnit == 'mg/dL' ? 'e.g. 110' : 'e.g. 6.1',
                         controller: valueController,
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                        validator: (v) {
-                          if (v == null || v.trim().isEmpty) return 'Required';
-                          if (double.tryParse(v.trim()) == null) return 'Enter a valid number';
+                        onChanged: (_) => setState(() {}),
+                        validator: (val) {
+                          final n = double.tryParse(val?.trim() ?? '');
+                          if (n == null) return 'Enter a valid number';
+                          final mg = HealthAnalytics.toMgdl(n, selectedUnit);
+                          if (mg < 10 || mg > 900) return 'Value looks wrong';
                           return null;
                         },
                       ),
@@ -106,32 +137,43 @@ class _AddDiabetesRecordViewState extends State<AddDiabetesRecordView> {
                     ),
                   ],
                 ),
+                if (status.label.isNotEmpty) ...[
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Text('Status: ', style: GoogleFonts.outfit(fontSize: 12, color: Colors.grey)),
+                      StatusPill(status, fontSize: 12),
+                    ],
+                  ),
+                ],
                 const SizedBox(height: 18),
-                PrimaryDropdown<String>(
-                  label: 'Reading Type',
-                  hint: 'Select reading type',
-                  value: selectedType,
-                  items: DiabetesReportController.readingTypes
-                      .map((t) => DropdownMenuItem(value: t, child: Text(t, style: GoogleFonts.outfit())))
-                      .toList(),
-                  onChanged: (val) => setState(() => selectedType = val ?? 'Fasting'),
+                Text('When was it measured?',
+                    style: GoogleFonts.outfit(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: isDark ? Colors.white : AppColors.textPrimary)),
+                const SizedBox(height: 8),
+                ChoiceChipsRow<String>(
+                  values: DiabetesReportController.readingTypes,
+                  selected: selectedType,
+                  labelOf: (t) => t == 'Post Prandial (PP)' ? 'After Meal (2 hrs)' : t,
+                  onSelected: (t) => setState(() => selectedType = t),
                 ),
                 const SizedBox(height: 18),
-                PrimaryDatePicker(
-                  label: 'Date',
-                  selectedDate: selectedDate,
-                  lastDate: DateTime.now(),
-                  onDateSelected: (date) => setState(() => selectedDate = date),
+                DateTimePickerRow(
+                  label: 'Date & time',
+                  value: selectedDate,
+                  onChanged: (d) => setState(() => selectedDate = d),
                 ),
                 const SizedBox(height: 18),
                 PrimaryInputField(
-                  label: 'Notes (Optional)',
-                  hint: 'e.g. After breakfast, before medicine',
+                  label: 'Notes (optional)',
+                  hint: 'e.g. After rice lunch, before insulin',
                   controller: notesController,
                   maxLines: 3,
                 ),
                 const SizedBox(height: 32),
-                PrimaryButton(text: 'Save Reading', onPressed: _save),
+                PrimaryButton(text: editing == null ? 'Save Reading' : 'Update Reading', onPressed: _save),
               ],
             ),
           ),

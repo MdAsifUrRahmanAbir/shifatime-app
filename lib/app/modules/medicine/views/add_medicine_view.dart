@@ -1031,7 +1031,7 @@ class _AddMedicineViewState extends State<AddMedicineView> {
 
     controller.addMedicine(medicine);
     Get.back();
-    AdService.showInterstitial();
+    AdService.showInterstitialEvery(AdService.counterAddMedicine);
     Get.snackbar(
       'Success 🎉',
       'Medicine scheduled successfully',

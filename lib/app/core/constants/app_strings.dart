@@ -86,8 +86,8 @@ class AppStrings {
   static const String landingHeadline1 = 'Your daily health\n';
   static const String landingHeadline2 = 'companion';
   static const String landingSubtitle =
-      'Never miss a dose, stay hydrated, and keep your health records in one '
-      'simple app that works offline.';
+      'Never miss a dose, stay hydrated, track your lab results, sugar and blood '
+      'pressure, and share one clear report with your doctor. Works offline.';
   static const String landingGetItOn = 'GET IT ON';
   static const String landingGooglePlay = 'Google Play';
   static const String landingTrustOffline = 'Works offline';
@@ -100,15 +100,15 @@ class AppStrings {
 
   static const String landingStat1Value = '11';
   static const String landingStat1Label = 'Medicine types';
-  static const String landingStat2Value = 'Exact';
-  static const String landingStat2Label = 'Time alarms';
+  static const String landingStat2Value = '9';
+  static const String landingStat2Label = 'Lab test panels';
   static const String landingStat3Value = 'PDF';
-  static const String landingStat3Label = 'Health reports';
+  static const String landingStat3Label = 'Doctor-ready report';
   static const String landingStat4Value = 'Free';
   static const String landingStat4Label = 'To download';
 
   static const String landingFeaturesEyebrow = 'FEATURES';
-  static const String landingFeaturesTitle = 'Everything you need, nothing you don\'t';
+  static const String landingFeaturesTitle = "Everything you need, nothing you don't";
   static const String landingFeaturesSubtitle =
       'Built for real daily routines: simple enough for anyone in the family.';
   static const String landingF1Title = 'Medicine Reminders';
@@ -119,19 +119,33 @@ class AppStrings {
   static const String landingF2Desc =
       'A daily target based on your profile, one-tap logging, and reminders '
       'that stop once you hit your goal.';
-  static const String landingF3Title = 'Medicine Stock';
+  static const String landingF3Title = 'Smart Medicine Stock';
   static const String landingF3Desc =
-      'Stock goes down with every dose you take, and you get an alert before you run out.';
-  static const String landingF4Title = 'Progress & Streaks';
+      'See how many days each medicine will last and the date it runs out, '
+      'with an alert before you need a refill.';
+  static const String landingF4Title = 'Progress & Achievements';
   static const String landingF4Desc =
-      'Weekly charts, daily streaks and badges that keep you consistent.';
-  static const String landingF5Title = 'Health Reports';
+      'Real streaks, 30-day adherence, a weekly dose chart and badges, all '
+      'calculated from what you actually take.';
+  static const String landingF5Title = 'Lab Test Reports';
   static const String landingF5Desc =
-      'Log blood sugar, blood pressure and test results, then export them as '
-      'a PDF for your doctor.';
+      'Pick CBC, Lipid, Liver, Kidney, Thyroid and more, enter your results, '
+      'and see High/Low flags and changes from your last test.';
   static const String landingF6Title = 'Health Tips';
   static const String landingF6Desc =
       'A built-in library of simple, practical health tips that works without internet.';
+  static const String landingF7Title = 'Blood Sugar & Pressure';
+  static const String landingF7Desc =
+      'Log readings with time and pulse. Get averages, trend charts, an '
+      'estimated HbA1c and standard medical categories.';
+  static const String landingF8Title = 'Doctor-Ready PDF';
+  static const String landingF8Desc =
+      'One organized report with key findings, medicines, readings and lab '
+      'results. Share it on WhatsApp or print it.';
+  static const String landingF9Title = 'Dose Notifications';
+  static const String landingF9Desc =
+      'One place to see every taken and missed dose and your water logs, '
+      'so nothing slips by.';
 
   static const String landingShowcaseEyebrow = 'A LOOK INSIDE';
   static const String landingShowcaseTitle = 'Clean, calm and easy to use';
@@ -145,4 +159,16 @@ class AppStrings {
   static const String landingCtaSubtitle =
       'Free to download. Set up your first reminder in under a minute.';
   static const String landingFooterCopyright = 'ShifaTime. Made by AbirDev.';
+
+  // Notifications feed
+  static const String notifTitle = 'Notifications';
+  static const String notifFilterAll = 'All';
+  static const String notifFilterTaken = 'Taken';
+  static const String notifFilterMissed = 'Missed';
+  static const String notifFilterWater = 'Water';
+  static const String notifToday = 'Today';
+  static const String notifYesterday = 'Yesterday';
+  static const String notifEmptyTitle = 'No notifications yet';
+  static const String notifEmptySubtitle =
+      'Taken, missed medicines and water logs will appear here.';
 }

@@ -3,9 +3,10 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/utils/responsive_layout.dart';
+import '../controllers/achievements_controller.dart';
 import '../widgets/achievements_body.dart';
 
-class AchievementsView extends StatelessWidget {
+class AchievementsView extends GetView<AchievementsController> {
   const AchievementsView({super.key});
 
   @override

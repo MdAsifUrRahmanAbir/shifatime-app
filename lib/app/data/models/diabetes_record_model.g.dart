@@ -1,6 +1,4 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// (Hand-authored to match hive_generator's output style — regenerate with
-//  `dart run build_runner build --delete-conflicting-outputs` once merged.)
 
 part of 'diabetes_record_model.dart';
 

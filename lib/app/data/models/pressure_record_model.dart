@@ -19,11 +19,19 @@ class PressureRecord extends HiveObject {
   @HiveField(4)
   String? notes;
 
+  @HiveField(5)
+  int? pulse; // heart rate, bpm (optional)
+
+  @HiveField(6)
+  String? arm; // 'Left' / 'Right' (optional)
+
   PressureRecord({
     this.id,
     this.systolic,
     this.diastolic,
     this.recordDate,
     this.notes,
+    this.pulse,
+    this.arm,
   });
 }

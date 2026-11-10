@@ -2,36 +2,36 @@ name: my_structure
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.0.0+7
+version: 3.0.1+9
 
 environment:   
-  sdk: ^3.12.0
+  sdk: ^3.13.0
 
 dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.8
+  cupertino_icons: 2.0.0
   get: ^4.6.5
   get_storage: ^2.1.1
   logger: ^2.4.0
-  google_fonts: 8.2.1
-  pinput: 6.0.2                  # For OTP / Pin Code
-  table_calendar: 3.2.1           # For calendar widget
+  google_fonts: 9.0.0
+  pinput: 7.0.0                  # For OTP / Pin Code
+  table_calendar: 3.3.0           # For calendar widget
   intl: 0.20.3                    # For date formatting
-  cached_network_image: ^3.2.3    # For network images in avatar or cards
+  cached_network_image: 4.0.6    # For network images in avatar or cards
   flutter_svg: ^2.1.1             # For SVG icons
   url_launcher: ^6.1.11           # For opening external URLs
-  fluttertoast: 10.0.0             # Optional: for toast messages
-  shimmer: ^3.0.0
+  fluttertoast: 10.0.2             # Optional: for toast messages
+  shimmer: 4.0.0
   skeletonizer:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  flutter_local_notifications: 22.3.0
-  timezone: 0.11.1
-  flutter_timezone: 5.1.0
-  permission_handler: 13.0.1
-  device_info_plus: 13.2.0
+  flutter_local_notifications: 23.0.0
+  timezone: 0.11.2
+  flutter_timezone: 5.1.1
+  permission_handler: 13.0.2
+  device_info_plus: 13.3.0
   pdf: ^3.11.1        # generates the PDF documents
   printing: ^5.13.4   # hands the generated PDF to the native share sheet
   firebase_core: ^5.1.0

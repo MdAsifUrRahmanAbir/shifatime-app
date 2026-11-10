@@ -7,6 +7,27 @@ import '../constants/app_sizes.dart';
 class AppTheme {
   AppTheme._(); // Private constructor to prevent instantiation
 
+  // google_fonts 9.x's `outfitTextTheme()` uses `material_ui`'s TextTheme,
+  // which is a different type from `package:flutter/material.dart`'s.
+  // Apply Outfit to each style individually instead (TextStyle is shared).
+  static TextTheme _outfitTextTheme(TextTheme t) => TextTheme(
+        displayLarge: GoogleFonts.outfit(textStyle: t.displayLarge),
+        displayMedium: GoogleFonts.outfit(textStyle: t.displayMedium),
+        displaySmall: GoogleFonts.outfit(textStyle: t.displaySmall),
+        headlineLarge: GoogleFonts.outfit(textStyle: t.headlineLarge),
+        headlineMedium: GoogleFonts.outfit(textStyle: t.headlineMedium),
+        headlineSmall: GoogleFonts.outfit(textStyle: t.headlineSmall),
+        titleLarge: GoogleFonts.outfit(textStyle: t.titleLarge),
+        titleMedium: GoogleFonts.outfit(textStyle: t.titleMedium),
+        titleSmall: GoogleFonts.outfit(textStyle: t.titleSmall),
+        bodyLarge: GoogleFonts.outfit(textStyle: t.bodyLarge),
+        bodyMedium: GoogleFonts.outfit(textStyle: t.bodyMedium),
+        bodySmall: GoogleFonts.outfit(textStyle: t.bodySmall),
+        labelLarge: GoogleFonts.outfit(textStyle: t.labelLarge),
+        labelMedium: GoogleFonts.outfit(textStyle: t.labelMedium),
+        labelSmall: GoogleFonts.outfit(textStyle: t.labelSmall),
+      );
+
   // --------------------
   // Light Theme
   // --------------------
@@ -26,7 +47,7 @@ class AppTheme {
       ),
       iconTheme: const IconThemeData(color: AppColors.textPrimary),
     ),
-    textTheme: GoogleFonts.outfitTextTheme(const TextTheme(
+    textTheme: _outfitTextTheme(const TextTheme(
       displayLarge: TextStyle(
         fontSize: AppSizes.fontXLarge,
         fontWeight: FontWeight.bold,
@@ -115,7 +136,7 @@ class AppTheme {
       ),
       iconTheme: const IconThemeData(color: AppColors.textLight),
     ),
-    textTheme: GoogleFonts.outfitTextTheme(const TextTheme(
+    textTheme: _outfitTextTheme(const TextTheme(
       displayLarge: TextStyle(
         fontSize: AppSizes.fontXLarge,
         fontWeight: FontWeight.bold,

@@ -21,6 +21,9 @@ const String _weightKey = 'userWeight';
 const String _waterTargetKey = 'userWaterTarget';
 const String _waterIntakeHistoryPrefix = 'waterIntakeHistory_';
 
+// Ads: per-trigger action counters for "interstitial every N actions"
+const String _adCounterPrefix = 'adCounter_';
+
 /// Static local storage utility backed by GetStorage.
 ///
 /// Initialise once in `main()` before `runApp`:
@@ -136,6 +139,19 @@ class LocalStorage {
     await _box.write('$_waterIntakeHistoryPrefix$date', logs);
   }
 
+  /// Total ml logged per day for every day with water history,
+  /// keyed by date string (yyyy_MM_dd).
+  static Map<String, double> getAllWaterIntake() {
+    final out = <String, double>{};
+    final keys = (_box.getKeys() as Iterable).map((e) => e.toString());
+    for (final key in keys) {
+      if (!key.startsWith(_waterIntakeHistoryPrefix)) continue;
+      final date = key.substring(_waterIntakeHistoryPrefix.length);
+      out[date] = getWaterIntake(date);
+    }
+    return out;
+  }
+
   static double getWaterIntake(String date) {
     final logs = getWaterLogs(date);
     double total = 0.0;
@@ -211,4 +227,9 @@ class LocalStorage {
 
   static bool isWaterSmartStopEnabled() => _box.read('waterSmartStop') ?? true;
   static Future<void> saveWaterSmartStopEnabled(bool val) => _box.write('waterSmartStop', val);
+
+  // ── Ads ────────────────────────────────────────────────────────────────────
+  static int getAdCounter(String name) => _box.read('$_adCounterPrefix$name') ?? 0;
+  static Future<void> saveAdCounter(String name, int val) =>
+      _box.write('$_adCounterPrefix$name', val);
 }

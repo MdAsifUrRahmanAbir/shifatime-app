@@ -1,6 +1,4 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// (Hand-authored to match hive_generator's output style — regenerate with
-//  `dart run build_runner build --delete-conflicting-outputs` once merged.)
 
 part of 'test_report_model.dart';
 
@@ -26,13 +24,17 @@ class TestReportAdapter extends TypeAdapter<TestReport> {
       normalRange: fields[4] as String?,
       testDate: fields[5] as DateTime?,
       notes: fields[6] as String?,
+      category: fields[7] as String?,
+      labName: fields[8] as String?,
+      doctorName: fields[9] as String?,
+      parameters: (fields[10] as List?)?.cast<TestParameter>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, TestReport obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -46,7 +48,15 @@ class TestReportAdapter extends TypeAdapter<TestReport> {
       ..writeByte(5)
       ..write(obj.testDate)
       ..writeByte(6)
-      ..write(obj.notes);
+      ..write(obj.notes)
+      ..writeByte(7)
+      ..write(obj.category)
+      ..writeByte(8)
+      ..write(obj.labName)
+      ..writeByte(9)
+      ..write(obj.doctorName)
+      ..writeByte(10)
+      ..write(obj.parameters);
   }
 
   @override

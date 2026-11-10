@@ -5,7 +5,7 @@
     "display": "standalone",
     "background_color": "#FFFFFF",
     "theme_color": "#2FAC66",
-    "description": "Never miss a dose and stay hydrated. Free, 100% offline medicine & water reminder app for Android.",
+    "description": "Medicine & water reminders, lab reports, sugar & BP tracking and a doctor-ready PDF. Free and 100% offline.",
     "orientation": "portrait-primary",
     "prefer_related_applications": true,
     "related_applications": [

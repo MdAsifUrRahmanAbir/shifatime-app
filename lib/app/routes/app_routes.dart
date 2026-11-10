@@ -17,6 +17,7 @@ abstract class Routes {
   static const achievements = '/achievements';
   static const notificationSettings = '/notification_settings';
   static const reminderHistory = '/reminder_history';
+  static const notifications = '/notifications';
   static const fullScreenAlarm = '/full_screen_alarm';
 
   // ── Health Reports (new) ──────────────────────────────────────────────────
@@ -26,4 +27,6 @@ abstract class Routes {
   static const addDiabetesRecord = '/add_diabetes_record';
   static const pressureReport = '/pressure_report';
   static const addPressureRecord = '/add_pressure_record';
+  static const testReportDetail = '/test_report_detail';
+  static const healthSummary = '/health_summary';
 }

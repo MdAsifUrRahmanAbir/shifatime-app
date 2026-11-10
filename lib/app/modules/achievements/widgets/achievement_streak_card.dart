@@ -6,6 +6,7 @@ class AchievementStreakCard extends StatelessWidget {
   final bool isDark;
   final String label;
   final String value;
+  final String? caption;
   final IconData icon;
   final Color color;
 
@@ -16,6 +17,7 @@ class AchievementStreakCard extends StatelessWidget {
     required this.value,
     required this.icon,
     required this.color,
+    this.caption,
   });
 
   @override
@@ -25,22 +27,14 @@ class AchievementStreakCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkCardBackground : Colors.white,
         borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.01),
-            blurRadius: 10,
-          ),
-        ],
+        border: Border.all(color: isDark ? Colors.white10 : Colors.black.withValues(alpha: 0.05)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, color: color, size: 28),
           const SizedBox(height: 12),
-          Text(
-            label,
-            style: GoogleFonts.outfit(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.w600),
-          ),
+          Text(label, style: GoogleFonts.outfit(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.w600)),
           const SizedBox(height: 4),
           Text(
             value,
@@ -50,6 +44,7 @@ class AchievementStreakCard extends StatelessWidget {
               color: isDark ? Colors.white : AppColors.textPrimary,
             ),
           ),
+          if (caption != null) Text(caption!, style: GoogleFonts.outfit(fontSize: 11, color: Colors.grey)),
         ],
       ),
     );

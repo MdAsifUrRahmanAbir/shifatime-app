@@ -253,6 +253,19 @@ Located in `lib/app/widgets/` — always use these instead of ad-hoc constructio
 | `Routes.notificationSettings` | `/notification_settings` | `NotificationSettingsView` |
 | `Routes.reminderHistory` | `/reminder_history` | `ReminderHistoryView` |
 | `Routes.fullScreenAlarm` | `/full_screen_alarm` | `FullScreenAlarmView` |
+| `Routes.notifications` | `/notifications` | `NotificationsView` (bell feed) |
+| `Routes.testReport` / `addTestReport` / `testReportDetail` | `/test_report…` | Lab reports list / add-edit (arg: `TestReport`) / detail (arg: report id) |
+| `Routes.diabetesReport` / `addDiabetesRecord` | `/diabetes_report…` | Blood sugar list / add-edit (arg: `DiabetesRecord`) |
+| `Routes.pressureReport` / `addPressureRecord` | `/pressure_report…` | Blood pressure list / add-edit (arg: `PressureRecord`) |
+| `Routes.healthSummary` | `/health_summary` | `HealthSummaryView` → doctor PDF |
+
+## 🩺 Health Reports Architecture
+
+- **`HealthAnalytics`** (`core/services/health_analytics.dart`) — single source of medical rules: lab range flags (`labFlag`), glucose status (ADA), BP category (AHA/ACC 2017), BMI, estimated HbA1c, adherence & streaks from `dose_records`, water streaks, stock days-left. Screens, achievements and the PDF must all use it — never re-implement thresholds in a view.
+- **`LabTestCatalog`** (`data/lab_test_catalog.dart`) — standard panels (CBC, Lipid, LFT, KFT, Thyroid, Urine, Vitamins, Cardiac, Glucose) with units and typical adult ranges (gender-specific where needed). Ranges are ASCII so the PDF base fonts can render them.
+- **`TestReport`** holds a list of `TestParameter`; legacy single-value reports are read through `TestReport.allParameters`.
+- **`HealthReportData.collect()`** (`core/services/health_report_data.dart`) — gathers everything for a period and builds "key findings"; used by `HealthSummaryView` and `PdfExportService.shareHealthReport()`.
+- **`PdfExportService`** uses built-in PDF fonts (offline); non-Latin-1 text (e.g. Bangla notes) is replaced with `?`.
 
 ---
 
@@ -277,7 +290,7 @@ If you add/modify fields in any `*_model.dart`:
    dart run build_runner build --delete-conflicting-outputs
    ```
 3. If adding a **new model class**:
-   - Assign a unique `@HiveType(typeId: N)` (next available: **2**).
+   - Assign a unique `@HiveType(typeId: N)` (used: 0 Medicine, 1 DoseRecord, 2 TestReport, 3 DiabetesRecord, 4 PressureRecord, 5 TestParameter — next available: **6**).
    - Register its adapter in `AppInitial.init()`.
    - Open its Hive box in `AppInitial.init()`.
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_colors.dart';
-import '../../../core/services/pdf_export_service.dart';
+import '../../../core/services/ad_service.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/gender_avatar.dart';
 import '../../profile/controllers/profile_controller.dart';
@@ -76,7 +76,7 @@ class MenuMainGrid extends StatelessWidget {
                 ),
                 IconButton(
                   icon: const Icon(Icons.arrow_forward_ios_rounded, size: 16, color: Colors.grey),
-                  onPressed: () => Get.toNamed(Routes.profile),
+                  onPressed: () => _openWithAd(() => Get.toNamed(Routes.profile)),
                 ),
               ],
             ),
@@ -98,7 +98,7 @@ class MenuMainGrid extends StatelessWidget {
                 'View BMI & suggestions',
                 Icons.person_pin_rounded,
                 Colors.blue,
-                () => Get.toNamed(Routes.profile),
+                () => _openWithAd(() => Get.toNamed(Routes.profile)),
               ),
               _buildMenuCard(
                 isDark,
@@ -106,7 +106,7 @@ class MenuMainGrid extends StatelessWidget {
                 'Manage remaining pills',
                 Icons.inventory_2_rounded,
                 Colors.orange,
-                () => Get.toNamed(Routes.inventory),
+                () => _openWithAd(() => Get.toNamed(Routes.inventory)),
               ),
               _buildMenuCard(
                 isDark,
@@ -114,7 +114,7 @@ class MenuMainGrid extends StatelessWidget {
                 'Streak logs & awards',
                 Icons.stars_rounded,
                 Colors.amber,
-                () => Get.toNamed(Routes.achievements),
+                () => _openWithAd(() => Get.toNamed(Routes.achievements)),
               ),
               _buildMenuCard(
                 isDark,
@@ -122,7 +122,7 @@ class MenuMainGrid extends StatelessWidget {
                 'Lab test history',
                 Icons.biotech_rounded,
                 Colors.indigo,
-                    () => Get.toNamed(Routes.testReport),
+                    () => _openWithAd(() => Get.toNamed(Routes.testReport)),
               ),
               _buildMenuCard(
                 isDark,
@@ -130,7 +130,7 @@ class MenuMainGrid extends StatelessWidget {
                 'Blood sugar log',
                 Icons.water_drop_rounded,
                 Colors.redAccent,
-                    () => Get.toNamed(Routes.diabetesReport),
+                    () => _openWithAd(() => Get.toNamed(Routes.diabetesReport)),
               ),
               _buildMenuCard(
                 isDark,
@@ -138,15 +138,15 @@ class MenuMainGrid extends StatelessWidget {
                 'Blood pressure log',
                 Icons.favorite_rounded,
                 Colors.pinkAccent,
-                    () => Get.toNamed(Routes.pressureReport),
+                    () => _openWithAd(() => Get.toNamed(Routes.pressureReport)),
               ),
               _buildMenuCard(
                 isDark,
                 'Health Summary',
-                'Share full report as PDF',
+                'Doctor-ready PDF report',
                 Icons.summarize_rounded,
                 Colors.deepPurple,
-                    () => PdfExportService.shareFullHealthSummary(),
+                    () => _openWithAd(() => Get.toNamed(Routes.healthSummary)),
               ),
               _buildMenuCard(
                 isDark,
@@ -177,6 +177,12 @@ class MenuMainGrid extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  /// Counts the tap; every 5th opens an interstitial first, then [open] runs
+  /// after the ad closes (or immediately when no ad is shown).
+  void _openWithAd(VoidCallback open) {
+    AdService.showInterstitialEvery(AdService.counterMenuOpen, onDone: open);
   }
 
   Widget _buildMenuCard(

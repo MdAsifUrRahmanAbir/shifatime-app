@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/utils/responsive_layout.dart';
+import '../../../widgets/banner_ad_widget.dart';
 import '../widgets/water_intake_body.dart';
 
 class WaterIntakeView extends StatefulWidget {
@@ -62,6 +63,7 @@ class _WaterIntakeViewState extends State<WaterIntakeView>
         ],
       ),
       body: const ResponsiveLayout(mobile: WaterIntakeBody()),
+      bottomNavigationBar: const SafeArea(top: false, child: BannerAdWidget()),
     );
   }
 }

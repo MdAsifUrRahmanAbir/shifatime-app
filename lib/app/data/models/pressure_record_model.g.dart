@@ -1,6 +1,4 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// (Hand-authored to match hive_generator's output style — regenerate with
-//  `dart run build_runner build --delete-conflicting-outputs` once merged.)
 
 part of 'pressure_record_model.dart';
 
@@ -24,13 +22,15 @@ class PressureRecordAdapter extends TypeAdapter<PressureRecord> {
       diastolic: fields[2] as int?,
       recordDate: fields[3] as DateTime?,
       notes: fields[4] as String?,
+      pulse: fields[5] as int?,
+      arm: fields[6] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, PressureRecord obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -40,7 +40,11 @@ class PressureRecordAdapter extends TypeAdapter<PressureRecord> {
       ..writeByte(3)
       ..write(obj.recordDate)
       ..writeByte(4)
-      ..write(obj.notes);
+      ..write(obj.notes)
+      ..writeByte(5)
+      ..write(obj.pulse)
+      ..writeByte(6)
+      ..write(obj.arm);
   }
 
   @override

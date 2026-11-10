@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../routes/app_pages.dart';
 import '../../../widgets/gender_avatar.dart';
@@ -69,23 +70,30 @@ class MedicineHomeHeader extends StatelessWidget {
                 onTap: () => Get.toNamed(Routes.waterIntake), // Statistics Screen
               ),
               const SizedBox(width: 12),
-              _buildHeaderIconButton(
-                context,
-                Icons.notifications_none_outlined,
-                hasDot: true,
-                onTap: () {
-                  Get.snackbar(
-                    'Notifications 🔔',
-                    'All scheduled medicine reminders are active!',
-                    snackPosition: SnackPosition.BOTTOM,
-                  );
-                },
+              ValueListenableBuilder(
+                valueListenable: Hive.box('activity_logs').listenable(),
+                builder: (context, Box box, _) => _buildHeaderIconButton(
+                  context,
+                  Icons.notifications_none_outlined,
+                  hasDot: _hasMissedToday(box),
+                  onTap: () => Get.toNamed(Routes.notifications),
+                ),
               ),
             ],
           ),
         ],
       ),
     );
+  }
+
+  /// True when any dose was marked missed today (drives the bell's red dot).
+  bool _hasMissedToday(Box box) {
+    final now = DateTime.now();
+    return box.values.any((e) {
+      if (e is! Map || e['action'] != 'missed') return false;
+      final ts = DateTime.tryParse(e['timestamp']?.toString() ?? '');
+      return ts != null && ts.year == now.year && ts.month == now.month && ts.day == now.day;
+    });
   }
 
   String _greeting() {
